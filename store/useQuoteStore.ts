@@ -5,6 +5,10 @@ interface Vehicle {
     id: string;
     name: string;
     details: string;
+    make?: string;
+    model?: string;
+    year?: string;
+    variant?: string;
 }
 
 interface Customer {
