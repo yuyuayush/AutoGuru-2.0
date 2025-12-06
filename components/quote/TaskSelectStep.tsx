@@ -17,8 +17,8 @@ const TaskSelectStep = () => {
     // Fetch Compatible Services
     const { data: services, isLoading } = useCompatibleServices(vehicle);
 
-    const hasLogbookService = tasks.some(t => t.startsWith('Logbook Service'));
-    const hasBasicService = tasks.includes('Basic Service');
+    const hasLogbookService = tasks.some(t => t.name.startsWith('Logbook Service'));
+    const hasBasicService = tasks.some(t => t.name === 'Basic Service');
     const isMainServiceSelected = hasLogbookService || hasBasicService;
 
     const iconMap: { [key: string]: any } = {

@@ -18,17 +18,22 @@ interface Customer {
     location: string;
 }
 
+interface Task {
+    _id: string; // Using _id to match backend
+    name: string;
+}
+
 interface QuoteState {
     quoteId: string | null;
-    tasks: string[];
+    tasks: Task[]; // Changed to array of Task objects
     notes: string;
     vehicle: Vehicle | null;
     customer: Customer;
 
     setQuoteId: (id: string) => void;
-    addTask: (task: string) => void;
-    removeTask: (task: string) => void;
-    setTasks: (tasks: string[]) => void;
+    addTask: (task: Task) => void;
+    removeTask: (taskId: string) => void;
+    setTasks: (tasks: Task[]) => void;
     setVehicle: (vehicle: Vehicle) => void;
     setCustomerEmail: (email: string) => void;
     setCustomerDetails: (name: string, mobile: string, location?: string) => void;
@@ -57,11 +62,11 @@ export const useQuoteStore = create<QuoteState>()(
             setQuoteId: (id) => set({ quoteId: id }),
 
             addTask: (task) => set((state) => ({
-                tasks: state.tasks.includes(task) ? state.tasks : [...state.tasks, task]
+                tasks: state.tasks.some((t) => t._id === task._id) ? state.tasks : [...state.tasks, task]
             })),
 
-            removeTask: (task) => set((state) => ({
-                tasks: state.tasks.filter((t) => t !== task)
+            removeTask: (taskId) => set((state) => ({
+                tasks: state.tasks.filter((t) => t._id !== taskId)
             })),
 
             setTasks: (tasks) => set({ tasks }),

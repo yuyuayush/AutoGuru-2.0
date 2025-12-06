@@ -26,12 +26,12 @@ const TaskCategoryStep = () => {
         router.push(`/quote/${quoteId}?${currentParams.toString()}`);
     };
 
-    const handleToggleTask = (taskName: string) => {
-        // We use the sub-service name as the task identifier for now
-        if (storeTasks.includes(taskName)) {
-            removeTask(taskName);
+    const handleToggleTask = (task: { _id: string, name: string }) => {
+        const isSelected = storeTasks.some(t => t._id === task._id);
+        if (isSelected) {
+            removeTask(task._id);
         } else {
-            addTask(taskName);
+            addTask(task);
         }
     };
 
@@ -85,8 +85,8 @@ const TaskCategoryStep = () => {
                                         <div className="relative flex items-center">
                                             <input
                                                 type="checkbox"
-                                                checked={storeTasks.includes(sub.name)}
-                                                onChange={() => handleToggleTask(sub.name)}
+                                                checked={storeTasks.some(t => t._id === sub._id)}
+                                                onChange={() => handleToggleTask({ _id: sub._id, name: sub.name })}
                                                 className="peer h-6 w-6 border-2 border-gray-300 rounded transition-colors checked:bg-[#00D09C] checked:border-[#00D09C] focus:ring-0 focus:ring-offset-0"
                                             />
                                             <svg className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 text-white pointer-events-none opacity-0 peer-checked:opacity-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">

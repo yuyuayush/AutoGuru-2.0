@@ -1,11 +1,60 @@
 import React from 'react';
-import { Car, Trash2 } from 'lucide-react';
+import Link from 'next/link';
+import { Car, Trash2, AlertCircle } from 'lucide-react';
+import { useCarSubService } from '@/hooks/useCarSubService';
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { useQuoteStore } from '@/store/useQuoteStore';
 
 interface QuoteSidebarProps {
     showGetQuotes?: boolean;
 }
+
+const CartItem = ({ task, vehicle, onRemove }: { task: { _id: string, name: string }, vehicle: any, onRemove: (id: string) => void }) => {
+    // We need to fetch the sub-service details to check compatibility if vehicle is selected
+    // Note: In a real app, we might want to batch this or cache it more effectively
+    const { data } = useCarSubService(task._id);
+    const subService = data?.subService;
+
+    const isCompatible = React.useMemo(() => {
+        if (!vehicle || !subService) return true; // Default to compatible if data missing
+
+        const rules = subService.compatibility || [];
+        if (rules.length === 0) return true; // No rules = all compatible
+
+        return rules.some((rule: any) => {
+            const makeMatch = rule.make.toLowerCase() === vehicle.make?.toLowerCase();
+            const modelMatch = !rule.model || rule.model.toLowerCase() === vehicle.model?.toLowerCase(); // Empty model means all models
+            const variantMatch = !rule.variant || rule.variant.toLowerCase() === vehicle.variant?.toLowerCase(); // Empty variant means all variants
+
+            return makeMatch && modelMatch && variantMatch;
+        });
+    }, [vehicle, subService]);
+
+    return (
+        <div className="flex flex-col border-b border-gray-100 last:border-0 pb-3 last:pb-0">
+            <div className="flex justify-between items-start group">
+                <span className="text-sm text-gray-700 flex-1 pr-2">{task.name}</span>
+                <button
+                    onClick={() => onRemove(task._id)}
+                    className="text-gray-400 hover:text-red-500 transition-colors"
+                >
+                    <Trash2 className="w-4 h-4" />
+                </button>
+            </div>
+            {!isCompatible && vehicle && (
+                <div className="mt-1 flex flex-col gap-1">
+                    <div className="flex items-center gap-1 text-xs text-red-500 font-medium">
+                        <AlertCircle className="w-3 h-3" />
+                        <span>Not available for your {vehicle.make}</span>
+                    </div>
+                    <Link href="/book-service" className="text-[10px] text-blue-500 hover:underline pl-4">
+                        View other services
+                    </Link>
+                </div>
+            )}
+        </div>
+    );
+};
 
 const QuoteSidebar = ({ showGetQuotes = true }: QuoteSidebarProps) => {
     const router = useRouter();
@@ -75,15 +124,12 @@ const QuoteSidebar = ({ showGetQuotes = true }: QuoteSidebarProps) => {
                 ) : (
                     <div className="space-y-4 mb-6">
                         {tasks.map((task, index) => (
-                            <div key={index} className="flex justify-between items-start group">
-                                <span className="text-sm text-gray-700 flex-1 pr-2">{task}</span>
-                                <button
-                                    onClick={() => removeTask(task)}
-                                    className="text-gray-400 hover:text-red-500 transition-colors"
-                                >
-                                    <Trash2 className="w-4 h-4" />
-                                </button>
-                            </div>
+                            <CartItem
+                                key={`${task._id}-${index}`}
+                                task={task}
+                                vehicle={vehicle}
+                                onRemove={removeTask}
+                            />
                         ))}
                     </div>
                 )}
