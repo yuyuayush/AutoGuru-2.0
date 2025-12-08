@@ -1,50 +1,6 @@
-/* @import "tailwindcss"; */
+@import "tailwindcss";
 
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
-@theme {
-  /* --- Colors --- */
-  --color-primary: #bf953f;
-  --color-primary-light: #c6ba37;
-  --color-primary-dark: #b38728;
-  --color-primary-start: #c4912c;
-  --color-primary-glow: #fcf6ba;
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* --background: #0a0a0a; */
-    /* --foreground: #0a0a0a;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
-} */ 
-
-/* Additional styles for AutoGuru website */
-/* .service-card {
-  transition: all 0.3s ease;
-}
-  --color-secondary: #171717;
-  --color-secondary-border: #404040;
-  
-  --color-background-soft: rgba(38, 38, 38, 0.2);
-
-  --color-foreground-muted: #9ca3af;
-  --color-foreground-dim: #d1d5db;
-  
-  /* Fonts */
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui;
-  --font-serif: "Playfair Display", serif;
-}
-
-/* --- MANUAL UTILITY CLASSES --- 
-*/
 
 .bg-gold-gradient {
   background-image: linear-gradient(to right, #c4912c, #c6ba37, #b38728);
@@ -103,57 +59,9 @@ body {
 } */ 
 
 /* Stat items animation */
-/* .stat-item {
-  opacity: 0;
-  animation: fadeIn 0.8s ease-out forwards;
-.bg-hero-fade {
-  background-image: linear-gradient(to top, #000000 10%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
-}
-
-.glass-panel {
-  background: rgba(23, 23, 23, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* --- Base Styles --- */
-:root {
-  --background: #000000;
-  --foreground: #ffffff;
-}
 
 
 
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  overflow-x: hidden;
-}
-
-/* --- Component Styles --- */
-.service-card {
-  transition: all 0.3s ease;
-}
-
-.service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px -5px rgba(191, 149, 63, 0.15);
-}
-
-/* --- Animations --- */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.stat-item:nth-child(4) {
-  animation-delay: 0.8s;
-} */
-
-@import "tailwindcss";
 
 /* @theme { */
   /* --- Colors --- */
@@ -700,6 +608,7 @@ body {
   font-size: 16px;
   color: #ccc;
   line-height: 1.6;
+  margin-bottom: 40px;
 }
 
 .feature2-car-line {
@@ -914,8 +823,4 @@ body {
   .feature3-buttons {
     flex-direction: column;
   }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.6s ease-out forwards;
 }
