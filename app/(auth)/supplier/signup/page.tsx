@@ -1,81 +1,117 @@
-
 "use client";
+
 import React from "react";
 import Link from "next/link";
-import Logo from "@/components/homepage/Logo";
 import SupplierRegisterForm from "@/components/form/SupplierRegisterForm";
+import Logo from "@/components/homepage/Logo";
 
 const SupplierSignupPage = () => {
     return (
-        <div className="min-h-screen bg-gray-900 flex">
-            {/* Left Side - Hero/Branding */}
-            <div className="hidden lg:flex lg:w-1/2 bg-gray-800 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-gray-900/40 z-10" />
-                {/* You can add a background image here if available */}
-                {/* <Image src="/supplier-hero.jpg" layout="fill" objectFit="cover" className="absolute inset-0" /> */}
+        <div className="min-h-screen flex bg-black">
 
-                <div className="relative z-20 flex flex-col justify-center px-12 text-white">
-                    <div className="mb-8">
-                        <Logo color="white" />
+            {/* LEFT SIDE — BRANDING */}
+            <div className="hidden lg:flex lg:w-1/2 flex-col justify-center px-20">
+                
+                <h2 className="text-4xl font-extrabold text-white">
+                    GROW YOUR WORKSHOP WITH
+                    <br />
+                    <span className="text-amber-400">AUTOGURU</span>
+                </h2>
+
+                <p className="mt-6 text-gray-300 max-w-md leading-relaxed">
+                    Join Australia's largest network of high-quality mechanics.  
+                    Get more bookings, manage your schedule, and grow your business.
+                </p>
+
+                <div className="mt-10 space-y-5">
+
+                    {/* BULLET POINT 1 */}
+                    <div className="flex items-center gap-4">
+                        <div className="text-amber-400 text-lg">◇</div>
+                        <span className="text-gray-300">
+                            Guaranteed bookings, not just leads
+                        </span>
                     </div>
-                    <h1 className="text-5xl font-extrabold tracking-tight mb-6">
-                        Grow your workshop with AutoGuru
-                    </h1>
-                    <p className="text-xl text-gray-300 max-w-md">
-                        Join Australia's largest network of high-quality mechanics. Get more bookings, manage your schedule, and grow your business.
-                    </p>
 
-                    <div className="mt-12 space-y-4">
-                        <div className="flex items-center space-x-3">
-                            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                                <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                </svg>
-                            </div>
-                            <span className="text-gray-300">Guaranteed bookings, not just leads</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                                <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                </svg>
-                            </div>
-                            <span className="text-gray-300">Fast payments for completed work</span>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                                <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                </svg>
-                            </div>
-                            <span className="text-gray-300">Dedicated support team</span>
-                        </div>
+                    {/* BULLET POINT 2 */}
+                    <div className="flex items-center gap-4">
+                        <div className="text-amber-400 text-lg">◇</div>
+                        <span className="text-gray-300">
+                            Fast payments for completed work
+                        </span>
+                    </div>
+
+                    {/* BULLET POINT 3 */}
+                    <div className="flex items-center gap-4">
+                        <div className="text-amber-400 text-lg">◇</div>
+                        <span className="text-gray-300">
+                            Dedicated support team
+                        </span>
                     </div>
                 </div>
             </div>
 
-            {/* Right Side - Form */}
-            <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 lg:w-1/2 bg-gray-900">
-                <div className="mx-auto w-full max-w-md">
-                    <div className="lg:hidden flex justify-center mb-8">
-                        <Logo color="white" />
-                    </div>
+            {/* RIGHT SIDE — BUSINESS PORTAL */}
+            <div className="flex-1 flex justify-center items-center px-8 lg:px-20 relative">
 
-                    <div className="text-center lg:text-left mb-8">
-                        <h2 className="text-3xl font-extrabold text-white">
-                            Create a Supplier Account
-                        </h2>
-                        <p className="mt-2 text-sm text-gray-400">
-                            Already have an account?{' '}
-                            <Link href="/supplier/login" className="font-medium text-blue-400 hover:text-blue-300">
-                                Sign in
-                            </Link>
+                {/* CARD BACKGROUND GLOW */}
+                <div className="absolute inset-y-0 right-0 w-2/3 bg-gradient-to-l from-black via-amber-900/5 to-transparent pointer-events-none" />
+
+                <div className="w-full max-w-md z-10">
+
+                    {/* TITLE */}
+                    <h2 className="text-center text-3xl font-extrabold text-white">
+                        BUSINESS PORTAL
+                    </h2>
+
+                    <p className="text-center mt-2 text-gray-400">
+                        Already have an account?{" "}
+                        <Link
+                            href="/supplier/login"
+                            className="text-blue-400 hover:underline"
+                        >
+                            Sign in
+                        </Link>
+                    </p>
+
+                    {/* PREMIUM CARD */}
+                    <div className="
+                        mt-8 rounded-xl border border-amber-700/40
+                        bg-black/40 backdrop-blur-md
+                        shadow-[0_0_25px_rgba(255,200,0,0.15)]
+                        p-10
+                    ">
+                        <p className="text-gray-300 text-center mb-6">
+                            Login or Create an account to register as a supplier.
                         </p>
+
+                        {/* LOGIN BUTTON */}
+                        <Link
+                            href="/supplier/login"
+                            className="
+                                block w-full text-center py-2 rounded-md
+                                border border-gray-600 text-gray-300
+                                hover:bg-gray-800 transition
+                            "
+                        >
+                            Login
+                        </Link>
+
+                        {/* CREATE ACCOUNT BUTTON */}
+                        <Link
+                            href="/supplier/signup"
+                            className="
+                                mt-4 block w-full text-center py-2 rounded-md
+                                bg-gradient-to-b from-amber-500 to-amber-700
+                                text-white font-semibold
+                                hover:from-amber-400 hover:to-amber-600
+                                transition
+                            "
+                        >
+                            Create Account
+                        </Link>
                     </div>
 
-                    <div className="bg-gray-800 py-8 px-4 shadow-xl rounded-lg sm:px-10 border border-gray-700">
-                        <SupplierRegisterForm />
-                    </div>
                 </div>
             </div>
         </div>
