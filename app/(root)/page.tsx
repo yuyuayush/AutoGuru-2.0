@@ -21,41 +21,43 @@ import TopBrands from "@/components/homepage/TopBrands";
 import FleetServicingFeatures from "@/components/homepage/FleetServicingFeatures";
 import FleetTestimonials from "@/components/homepage/FleetTestimonials";
 import ServicesOffered from "@/components/homepage/ServicesOffered";
+import ExpertCareSection from "@/components/homepage/ExpertCareSection";
 
 // Register GSAP plugins
 if (typeof window !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger);
 }
 
 const Home = () => {
-    useEffect(() => {
-        // Cleanup function
-        return () => {
-            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-        };
-    }, []);
+  useEffect(() => {
+    // Cleanup function
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
 
-    return (
-        <main className="">
-            <Hero />
-            <WhyChooseUs />
-            <FleetPromo />
-            <SuperchargeBusiness />
-            <TopBrands />
-            <FleetServicingFeatures />
-            <FleetTestimonials />
-            <ServicesOffered />
-            {/* <About /> */}
-            {/* <Testimonials /> */}
-            {/* <Features /> */}
-            {/* <WhyAutoGuru /> */}
-            {/* <Gallery /> */}
-            {/* <BrandsWeServe /> */}
-            {/* <Pricing /> */}
-            {/* <AutoGuruBannerCarousol /> */}
-            {/* <HowItWorks /> */}
-        </main>
-    );
+  return (
+    <main className="">
+      <Hero />
+      {/* <WhyChooseUs /> */}
+      <ExpertCareSection />
+      <FleetPromo />
+      <SuperchargeBusiness />
+      <TopBrands />
+      <FleetServicingFeatures />
+      <FleetTestimonials />
+      <ServicesOffered />
+      {/* <About /> */}
+      {/* <Testimonials /> */}
+      {/* <Features /> */}
+      {/* <WhyAutoGuru /> */}
+      {/* <Gallery /> */}
+      {/* <BrandsWeServe /> */}
+      {/* <Pricing /> */}
+      {/* <AutoGuruBannerCarousol /> */}
+      {/* <HowItWorks /> */}
+    </main>
+  );
 };
 
 export default Home;
