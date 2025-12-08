@@ -12,6 +12,7 @@ import { SubService } from "@/types";
 import { getSubServiceColumns } from "@/constants/tableColumns";
 import { toast } from "sonner";
 
+
 export default function SubServicesPage() {
     const { data: subServicesData, isLoading } = useCarSubServices();
     const { data: servicesData } = useCarServices();
@@ -54,6 +55,8 @@ export default function SubServicesPage() {
         e.preventDefault();
         try {
             await createSubService.mutateAsync(formData);
+            setIsAddModalOpen(false);
+            setIsAddModalOpen(false);
             setIsAddModalOpen(false);
             setFormData({ name: "", description: "", price: 0, image: "", serviceId: "" });
         } catch (error) {
@@ -180,6 +183,7 @@ export default function SubServicesPage() {
                             onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })}
                         />
                     </div>
+
                     <div className="pt-4 flex justify-end gap-3">
                         <button type="button" onClick={() => setIsAddModalOpen(false)} className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-sm font-medium">Cancel</button>
                         <button type="submit" disabled={createSubService.isPending} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium disabled:opacity-50">
@@ -245,6 +249,7 @@ export default function SubServicesPage() {
                             onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })}
                         />
                     </div>
+
                     <div className="pt-4 flex justify-end gap-3">
                         <button type="button" onClick={() => setIsEditModalOpen(false)} className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-sm font-medium">Cancel</button>
                         <button type="submit" disabled={updateSubService.isPending} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium disabled:opacity-50">
@@ -263,6 +268,6 @@ export default function SubServicesPage() {
                 title="Delete Sub-Service"
                 description={`Are you sure you want to delete ${selectedSubService?.name}? This action cannot be undone.`}
             />
-        </div>
+        </div >
     );
 }

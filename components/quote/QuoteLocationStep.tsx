@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { MapPin } from 'lucide-react';
 import { toast } from 'sonner';
 import { useQuoteStore } from '@/store/useQuoteStore';
+import { useCarSubService } from '@/hooks/useCarSubService';
 
 const QuoteLocationStep = () => {
     const router = useRouter();
@@ -10,9 +11,20 @@ const QuoteLocationStep = () => {
     const searchParams = useSearchParams();
     const quoteId = params.quoteId as string;
 
-    const { customer, setCustomerDetails } = useQuoteStore();
+    const { customer, setCustomerDetails, addTask, setTasks } = useQuoteStore();
     const [location, setLocation] = useState(customer.location || '');
     const [isLocating, setIsLocating] = useState(false);
+
+    const repairId = searchParams.get('repairInspectionIds');
+    const { data: subServiceData } = useCarSubService(repairId || '');
+
+    // Handle pre-selected sub-services from URL
+    useEffect(() => {
+        if (repairId && subServiceData?.subService?.name) {
+            // If coming from a specific service page, we probably want to start fresh with just that task
+            setTasks([{ _id: repairId, name: subServiceData.subService.name }]);
+        }
+    }, [repairId, subServiceData, setTasks]);
 
     const handleNext = () => {
         setCustomerDetails(customer.name, customer.mobile, location);

@@ -1,10 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { MapPin, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import Image from "next/image";
+import { useCarMakes, useCarModels } from "@/hooks/useCarData";
+import { useQuoteStore } from "@/store/useQuoteStore";
+import { SearchableSelect } from "@/components/ui/SearchableSelect";
 
 interface SearchHeroProps {
     title: string;
@@ -14,14 +17,53 @@ interface SearchHeroProps {
 
 export default function SearchHero({ title, subtitle, backgroundImage }: SearchHeroProps) {
     const router = useRouter();
-    const [vehicle, setVehicle] = useState("");
+    const [make, setMake] = useState("");
     const [model, setModel] = useState("");
     const [location, setLocation] = useState("");
     const [isLocating, setIsLocating] = useState(false);
 
+    const { setCustomerDetails, setVehicle } = useQuoteStore();
+
+    // Fetch dynamic car data
+    const { data: makesData, isLoading: isMakesLoading } = useCarMakes();
+    const { data: modelsData, isLoading: isModelsLoading } = useCarModels(make);
+
+    const makes = makesData?.makes || [];
+    const models = modelsData?.models || [];
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        router.push('/quote/2be92782-d9d9-4f68-959e-08b6ae5ba3aa?step=location');
+
+        if (!make || !model) {
+            toast.error("Please select both make and model");
+            return;
+        }
+
+        // Generate a random UUID for the quote
+        const quoteId = crypto.randomUUID();
+
+        // Save to store
+        setVehicle({
+            id: 'manual-entry',
+            name: `${make} ${model}`,
+            details: '',
+            make: make,
+            model: model
+        });
+
+        if (location) {
+            setCustomerDetails("", "", location);
+        }
+
+        // Construct query parameters
+        // Redirect to task-select step
+        const params = new URLSearchParams({
+            step: 'task-select',
+            isProductFlow: 'false',
+            isFleet: 'false'
+        });
+
+        router.push(`/quote/${quoteId}?${params.toString()}`);
     };
 
     const handleLocationClick = async () => {
@@ -105,38 +147,40 @@ export default function SearchHero({ title, subtitle, backgroundImage }: SearchH
                             onSubmit={handleSubmit}
                             className="bg-white rounded shadow-xl flex flex-col md:flex-row items-center p-2 md:p-0"
                         >
-                            {/* Vehicle Dropdown */}
-                            <div className="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-gray-200 py-8 px-6">
-                                <select
-                                    className="w-full bg-transparent outline-none text-gray-700 font-medium cursor-pointer"
-                                    value={vehicle}
-                                    onChange={(e) => setVehicle(e.target.value)}
-                                >
-                                    <option value="">What do you drive?</option>
-                                    <option value="car">Car</option>
-                                    <option value="suv">SUV</option>
-                                    <option value="truck">Truck</option>
-                                </select>
+                            {/* Make Dropdown */}
+                            <div className="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-gray-200 py-6 px-4">
+                                <SearchableSelect
+                                    value={make}
+                                    onChange={(value) => {
+                                        setMake(value);
+                                        setModel(""); // Reset model when make changes
+                                    }}
+                                    options={makes}
+                                    placeholder={isMakesLoading ? "Loading makes..." : "What do you drive?"}
+                                    disabled={isMakesLoading}
+                                    className="w-full border-none shadow-none text-gray-700 font-medium px-0 py-0 hover:border-none focus:ring-0"
+                                    dropdownClassName="max-h-80"
+                                />
                             </div>
 
                             {/* Model Dropdown */}
-                            <div className="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-gray-200 py-8 px-6">
-                                <select
-                                    className="w-full bg-transparent outline-none text-gray-700 font-medium cursor-pointer"
+                            <div className="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-gray-200 py-6 px-4">
+                                <SearchableSelect
                                     value={model}
-                                    onChange={(e) => setModel(e.target.value)}
-                                >
-                                    <option value="">Which model?</option>
-                                    <option value="model1">Model 1</option>
-                                    <option value="model2">Model 2</option>
-                                </select>
+                                    onChange={(value) => setModel(value)}
+                                    options={models}
+                                    placeholder={isModelsLoading ? "Loading models..." : "Which model?"}
+                                    disabled={!make || isModelsLoading}
+                                    className="w-full border-none shadow-none text-gray-700 font-medium px-0 py-0 hover:border-none focus:ring-0"
+                                    dropdownClassName="max-h-80"
+                                />
                             </div>
 
                             {/* Location Input */}
                             <div className="w-full md:w-1/3 py-8 px-6 flex items-center relative">
                                 <input
                                     type="text"
-                                    className="w-full bg-transparent outline-none text-gray-700 font-medium placeholder-gray-700"
+                                    className="w-full bg-transparent outline-none text-gray-700 font-medium placeholder-gray-500"
                                     placeholder="Postcode or Suburb"
                                     value={location}
                                     onChange={(e) => setLocation(e.target.value)}
