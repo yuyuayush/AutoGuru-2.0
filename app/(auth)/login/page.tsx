@@ -1,74 +1,94 @@
 "use client";
+
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Logo from "@/components/homepage/Logo";
 import LoginForm from "@/components/form/LoginForm";
 
 const LoginPage = () => {
   return (
-    <div className="flex flex-col justify-center  py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <Link href="/" className="flex justify-center">
-          <Logo />
-        </Link>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Sign in to your account
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Or{' '}
-          <Link href="/signup" className="font-medium text-blue-600 hover:text-blue-500">
-            create a new account
-          </Link>
-        </p>
+    <div className="login-page flex min-h-screen w-full bg-black">
+
+      {/* LEFT SIDE HERO SECTION */}
+      <div className="left-hero relative w-1/2 h-screen overflow-hidden">
+        <Image
+          src="/LoginAssets/Autoguru.jpg"
+          alt="Luxury car"
+          fill
+          priority
+          className="object-cover"
+        />
+
+        {/* HERO TEXT */}
+        <div className="hero-text absolute bottom-20 left-16 z-20">
+          <h1 className="text-white text-5xl font-bold tracking-widest">
+            AUTO<span className="text-amber-400">GURU</span>
+          </h1>
+          <p className="text-gray-300 text-lg mt-2 tracking-wide">
+            SERVICE. REPAIR. EXCELLENCE.
+          </p>
+        </div>
+
+        {/* Dark gradient overlay for premium look */}
+        <div className="absolute inset-0 bg-linear-to-r from-black via-black/70 to-transparent"></div>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="py-8 px-4 sm:px-10">
-          <LoginForm />
+      {/* RIGHT SIDE LOGIN SECTION */}
+      <div className="right-login w-1/2 flex items-center justify-center p-10">
+        <div className="login-container w-full max-w-md">
 
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">
-                  Or continue with
-                </span>
-              </div>
+          {/* TITLE */}
+          <h2 className="login-title text-3xl font-extrabold text-white">
+            SIGN IN TO YOUR ACCOUNT
+          </h2>
+
+          <p className="login-subtitle text-gray-300 mt-2 text-sm">
+            Or{" "}
+            <Link href="/signup" className="signup-link text-blue-400 hover:underline">
+              create a new account
+            </Link>
+          </p>
+
+          {/* LOGIN CARD */}
+          <div className="login-card mt-8 rounded-xl">
+
+            <LoginForm />
+
+            {/* DIVIDER */}
+            <div className="flex items-center my-8">
+              <div className="grow border-t border-gray-600"></div>
+              <span className="mx-3 text-gray-400 text-sm">or continue with</span>
+              <div className="grow border-t border-gray-600"></div>
             </div>
 
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <div>
-                <a
-                  href="#"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                >
-                  <span className="sr-only">Sign in with Google</span>
-                  <svg className="w-5 h-5" viewBox="0 0 24 24">
-                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
-                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
-                  </svg>
-                </a>
-              </div>
+            {/* SOCIAL BUTTONS */}
+            <div className="social-buttons flex gap-4">
 
-              <div>
-                <a
-                  href="#"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                >
-                  <span className="sr-only">Sign in with Facebook</span>
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
-                  </svg>
-                </a>
-              </div>
+              {/* GOOGLE BTN */}
+              <button className="social-btn google flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512" className="w-4 h-4">
+                  <path fill="#EA4335" d="M488 261.8c0-17.8-1.6-35-4.7-51.6H249v97.7h135.8c-5.9 31.7-23.7 58.5-50.4 76.4l81.3 63.1c47.5-43.7 74.3-108.2 74.3-185.6z"/>
+                  <path fill="#34A853" d="M249 492c67 0 123-22.3 164-60.5l-81.3-63.1c-22.6 15-51.6 23.9-82.7 23.9-63.6 0-117.4-42.8-136.7-100.5H30v62.9C71.4 439 153.7 492 249 492z"/>
+                  <path fill="#FBBC04" d="M112.3 292.8c-5.1-15.3-8-31.6-8-48.3 0-16.7 2.9-33 8-48.3v-62.9H30C10.7 164 0 204.5 0 244.5S10.7 325 30 364.1l82.3-62.9z"/>
+                  <path fill="#4285F4" d="M249 97.1c36.3 0 69 12.5 94.7 36.9l71-71C371.4 23.2 314 0 249 0 153.7 0 71.4 53 30 132.9l82.3 62.9C131.6 140 185.4 97.1 249 97.1z"/>
+                </svg>
+                Google
+              </button>
+
+              {/* FACEBOOK BTN */}
+              <button className="social-btn facebook flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" className="w-4 h-4">
+                  <path fill="#1877F2" d="M279.14 288l14.22-92.66h-88.91V127.74c0-25.35 12.42-50.06 52.24-50.06H295V6.26S268.43 0 243.83 0c-73.22 0-121.17 44.38-121.17 124.72V195.3H48v92.66h74.66V512h91.72V288z"/>
+                </svg>
+                Facebook
+              </button>
+
             </div>
           </div>
         </div>
       </div>
+
     </div>
   );
 };
