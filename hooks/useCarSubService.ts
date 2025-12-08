@@ -6,8 +6,23 @@ export const useCarSubServices = (serviceId?: string) => {
     return useQuery({
         queryKey: ["carSubServices", serviceId],
         queryFn: () => carSubServiceApi.getSubServicesByServiceId(serviceId),
-
         enabled: !!serviceId,
+    });
+};
+
+export const useCompatibleSubServices = (serviceId: string, vehicle: any) => {
+    return useQuery({
+        queryKey: ["compatibleSubServices", serviceId, vehicle],
+        queryFn: () => carSubServiceApi.getCompatibleSubServices({
+            serviceId,
+            make: vehicle?.make,
+            model: vehicle?.model
+        }),
+        enabled: !!serviceId,
+        select: (data: any) => ({
+            subServices: data.subServices,
+            parentService: data.parentService
+        })
     });
 };
 

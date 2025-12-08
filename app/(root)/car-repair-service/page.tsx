@@ -6,6 +6,7 @@ import { useCarServices } from "@/hooks/useCarService";
 import { Loader2 } from "lucide-react";
 import ServiceCard from "@/components/car-repair/ServiceCard";
 import ServicesOffered from "@/components/homepage/ServicesOffered";
+import CarRepairServiceSkeleton from "@/components/skeletons/CarRepairServiceSkeleton";
 
 // Register GSAP plugins
 if (typeof window !== "undefined") {
@@ -65,9 +66,7 @@ const HomeServiceRepairingPage = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-white">
-        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-      </div>
+      <CarRepairServiceSkeleton />
     );
   }
 

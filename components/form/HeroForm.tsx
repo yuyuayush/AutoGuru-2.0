@@ -1,13 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, ChevronDown, MapPin } from "lucide-react";
-import { HERO_DATA } from "@/constants";
 import { toast } from "sonner";
 import { useQuoteStore } from "@/store/useQuoteStore";
+import { useCarMakes, useCarModels } from "@/hooks/useCarData";
+import { SearchableSelect } from "@/components/ui/SearchableSelect";
 
 const HeroForm = () => {
     const router = useRouter();
@@ -18,24 +19,45 @@ const HeroForm = () => {
     });
     const [isLocating, setIsLocating] = React.useState(false);
 
-    const { setCustomerDetails } = useQuoteStore();
+    const { setCustomerDetails, setVehicle } = useQuoteStore();
+
+    // Fetch dynamic car data
+    const { data: makesData, isLoading: isMakesLoading } = useCarMakes();
+    const { data: modelsData, isLoading: isModelsLoading } = useCarModels(formData.make);
+
+    const makes = makesData?.makes || [];
+    const models = modelsData?.models || [];
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!formData.make || !formData.model) {
+            toast.error("Please select both make and model");
+            return;
+        }
+
         // Generate a random UUID for the quote
         const quoteId = crypto.randomUUID();
 
-        // Save location to store
+        // Save to store
+        setVehicle({
+            id: 'manual-entry',
+            name: `${formData.make} ${formData.model}`,
+            details: '',
+            make: formData.make,
+            model: formData.model
+        });
+
         if (formData.location) {
             setCustomerDetails("", "", formData.location);
         }
 
         // Construct query parameters
+        // We redirect to task-select step as requested
         const params = new URLSearchParams({
-            step: 'vehicle-rego-check',
-            ...(formData.make && { make: formData.make }),
-            ...(formData.model && { model: formData.model }),
-            ...(formData.location && { location: formData.location })
+            step: 'task-select',
+            isProductFlow: 'false',
+            isFleet: 'false'
         });
 
         router.push(`/quote/${quoteId}?${params.toString()}`);
@@ -43,10 +65,14 @@ const HeroForm = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setFormData(prev => {
+            const updates = { ...prev, [name]: value };
+            // Reset model if make changes
+            if (name === 'make') {
+                updates.model = "";
+            }
+            return updates;
+        });
     };
 
     const handleLocationClick = async () => {
@@ -114,38 +140,34 @@ const HeroForm = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Make Dropdown */}
                 <div className="relative group">
-                    <select
-                        name="make"
+                    <SearchableSelect
                         value={formData.make}
-                        onChange={handleChange}
-                        className="w-full bg-[#2a2a2a] border border-white/10 text-gray-300 py-3.5 px-4 rounded-sm appearance-none focus:outline-none focus:border-white/30 transition-colors cursor-pointer text-sm"
-                    >
-                        <option value="" disabled>What do you drive?</option>
-                        {HERO_DATA.carMakes.map((make) => (
-                            <option key={make.value} value={make.value} className="text-black">
-                                {make.label}
-                            </option>
-                        ))}
-                    </select>
-                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-3 h-3 pointer-events-none" />
+                        onChange={(value) => {
+                            setFormData(prev => ({
+                                ...prev,
+                                make: value,
+                                model: "" // Reset model when make changes
+                            }));
+                        }}
+                        options={makes}
+                        placeholder={isMakesLoading ? "Loading makes..." : "What do you drive?"}
+                        disabled={isMakesLoading}
+                        className="bg-[#2a2a2a] border-white/10 text-gray-300 hover:border-white/30 rounded-sm py-3.5"
+                        dropdownClassName="max-h-80"
+                    />
                 </div>
 
                 {/* Model Dropdown */}
                 <div className="relative group">
-                    <select
-                        name="model"
+                    <SearchableSelect
                         value={formData.model}
-                        onChange={handleChange}
-                        className="w-full bg-[#2a2a2a] border border-white/10 text-gray-300 py-3.5 px-4 rounded-sm appearance-none focus:outline-none focus:border-white/30 transition-colors cursor-pointer text-sm"
-                    >
-                        <option value="" disabled>Which model?</option>
-                        {HERO_DATA.carModels.map((model) => (
-                            <option key={model.value} value={model.value} className="text-black">
-                                {model.label}
-                            </option>
-                        ))}
-                    </select>
-                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 w-3 h-3 pointer-events-none" />
+                        onChange={(value) => setFormData(prev => ({ ...prev, model: value }))}
+                        options={models}
+                        placeholder={isModelsLoading ? "Loading models..." : "Which model?"}
+                        disabled={!formData.make || isModelsLoading}
+                        className="bg-[#2a2a2a] border-white/10 text-gray-300 hover:border-white/30 rounded-sm py-3.5"
+                        dropdownClassName="max-h-80"
+                    />
                 </div>
 
                 {/* Location Input */}

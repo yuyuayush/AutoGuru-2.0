@@ -15,7 +15,7 @@ const ContactForm = () => {
   });
 
   //Handle Input Change
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -24,7 +24,7 @@ const ContactForm = () => {
   };
 
   // Handle Submit
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:any) => {
     e.preventDefault();
 
     const payload = {

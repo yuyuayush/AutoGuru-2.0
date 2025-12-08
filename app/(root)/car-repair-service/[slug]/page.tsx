@@ -2,23 +2,21 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Star, ChevronRight, MapPin, CheckCircle2, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useCarSubService } from "@/hooks/useCarSubService";
+import RepairDetailSkeleton from "@/components/skeletons/RepairDetailSkeleton";
 
 const RepairDetailPage = () => {
     const params = useParams();
+    const router = useRouter();
     const slug = params.slug as string;
 
     const { data: subServiceData, isLoading } = useCarSubService(slug);
 
     if (isLoading) {
-        return (
-            <div className="flex justify-center items-center min-h-screen bg-white">
-                <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-            </div>
-        );
+        return <RepairDetailSkeleton />;
     }
 
     if (!subServiceData?.subService) {
@@ -182,9 +180,22 @@ const RepairDetailPage = () => {
                             <span className="text-xs text-gray-500 ml-1">4.6 • 357 reviews</span>
                         </div>
                     </div>
-                    <Link href="/book-service" className="bg-[#00D26A] hover:bg-[#00b85c] text-white font-bold py-3 px-8 rounded-md transition-colors uppercase tracking-wide text-sm">
-                        Let's go!
-                    </Link>
+                    <button
+                        onClick={() => {
+                            const quoteId = crypto.randomUUID();
+                            const subServiceId = subServiceData?.subService?._id;
+                            const params = new URLSearchParams({
+                                step: 'location',
+                                isProductFlow: 'false',
+                                isFleet: 'false',
+                                ...(subServiceId && { repairInspectionIds: subServiceId })
+                            });
+                            router.push(`/quote/${quoteId}?${params.toString()}`);
+                        }}
+                        className="bg-[#00D26A] hover:bg-[#00b85c] text-white font-bold py-3 px-8 rounded-md transition-colors uppercase tracking-wide text-sm"
+                    >
+                        Get a Quote
+                    </button>
                 </div>
             </div>
 
