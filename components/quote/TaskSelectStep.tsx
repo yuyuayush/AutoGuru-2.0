@@ -1,8 +1,9 @@
 import React from 'react';
 import { ChevronRight, Wrench, Snowflake, Shield, Battery, Disc, Settings, Activity, Search, Car } from 'lucide-react';
 import { useRouter, useParams, useSearchParams } from 'next/navigation';
-import { TASK_CATEGORIES } from '@/constants';
+// import { TASK_CATEGORIES } from '@/constants'; // Unused now
 import QuoteSidebar from './QuoteSidebar';
+import { useCompatibleServices } from '@/hooks/useCarService';
 
 import { useQuoteStore } from '@/store/useQuoteStore';
 
@@ -11,10 +12,13 @@ const TaskSelectStep = () => {
     const params = useParams();
     const searchParams = useSearchParams();
     const quoteId = params.quoteId as string;
-    const { tasks } = useQuoteStore();
+    const { tasks, vehicle } = useQuoteStore();
 
-    const hasLogbookService = tasks.some(t => t.startsWith('Logbook Service'));
-    const hasBasicService = tasks.includes('Basic Service');
+    // Fetch Compatible Services
+    const { data: services, isLoading } = useCompatibleServices(vehicle);
+
+    const hasLogbookService = tasks.some(t => t.name.startsWith('Logbook Service'));
+    const hasBasicService = tasks.some(t => t.name === 'Basic Service');
     const isMainServiceSelected = hasLogbookService || hasBasicService;
 
     const iconMap: { [key: string]: any } = {
@@ -34,11 +38,10 @@ const TaskSelectStep = () => {
         "Window tinting": Car,
     };
 
-    const handleCategoryClick = (categoryId: number) => {
+    const handleCategoryClick = (categoryId: string) => {
         const currentParams = new URLSearchParams(searchParams.toString());
         currentParams.set('step', 'task-category');
-        currentParams.set('selectedRepairCategoryId', categoryId.toString());
-        // Tasks are now managed by the store, so we don't need to worry about passing them in the URL
+        currentParams.set('selectedRepairCategoryId', categoryId);
         router.push(`/quote/${quoteId}?${currentParams.toString()}`);
     };
 
@@ -53,7 +56,7 @@ const TaskSelectStep = () => {
                 <div className="flex-1">
                     {/* Main Service Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                        {/* Logbook Service */}
+                        {/* Logbook Service - Keep hardcoded for now or fetch? keeping as is per existing UI logic */}
                         <div
                             onClick={() => {
                                 if (isMainServiceSelected) return;
@@ -62,8 +65,8 @@ const TaskSelectStep = () => {
                                 router.push(`/quote/${quoteId}?${currentParams.toString()}`);
                             }}
                             className={`relative bg-white border rounded-lg p-6 transition-colors shadow-sm ${isMainServiceSelected
-                                    ? 'border-gray-200 opacity-50 cursor-not-allowed'
-                                    : 'border-gray-200 cursor-pointer hover:border-blue-500'
+                                ? 'border-gray-200 opacity-50 cursor-not-allowed'
+                                : 'border-gray-200 cursor-pointer hover:border-blue-500'
                                 }`}
                         >
                             {hasLogbookService && (
@@ -91,8 +94,8 @@ const TaskSelectStep = () => {
 
                         {/* Basic Service */}
                         <div className={`bg-white border rounded-lg p-6 transition-colors shadow-sm ${isMainServiceSelected
-                                ? 'border-gray-200 opacity-50 cursor-not-allowed'
-                                : 'border-gray-200 cursor-pointer hover:border-blue-500'
+                            ? 'border-gray-200 opacity-50 cursor-not-allowed'
+                            : 'border-gray-200 cursor-pointer hover:border-blue-500'
                             }`}>
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-4">
@@ -110,19 +113,23 @@ const TaskSelectStep = () => {
                         How do I know which service to choose? <ChevronDownIcon className="w-4 h-4" />
                     </button>
 
-                    {/* Categories Grid */}
+                    {/* Categories Grid - Dynamic */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-                        {TASK_CATEGORIES.map((category) => {
-                            const Icon = iconMap[category.name] || Settings;
+                        {isLoading ? (
+                            <div className="col-span-2 flex justify-center py-8">
+                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+                            </div>
+                        ) : services?.map((service: any) => {
+                            const Icon = iconMap[service.name] || Settings;
                             return (
                                 <div
-                                    key={category.id}
-                                    onClick={() => handleCategoryClick(category.id)}
+                                    key={service._id}
+                                    onClick={() => handleCategoryClick(service._id)}
                                     className="flex items-center justify-between py-3 border-b border-gray-100 cursor-pointer hover:bg-gray-50 px-2 rounded transition-colors group"
                                 >
                                     <div className="flex items-center gap-3 text-gray-700 group-hover:text-gray-900">
                                         <Icon className="w-5 h-5 text-gray-400 group-hover:text-gray-600" />
-                                        <span className="font-medium">{category.name}</span>
+                                        <span className="font-medium">{service.name}</span>
                                     </div>
                                     <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-gray-500" />
                                 </div>

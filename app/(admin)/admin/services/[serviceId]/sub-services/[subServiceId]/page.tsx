@@ -7,6 +7,8 @@ import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { ImageUpload } from "@/components/ui/ImageUpload";
 import { RichTextEditor } from "@/components/ui/RichTextEditor";
+import { CompatibilityManager } from "@/components/admin/CompatibilityManager";
+import { toast } from "sonner";
 
 export default function SubServiceDetailsPage() {
     const router = useRouter();
@@ -21,7 +23,8 @@ export default function SubServiceDetailsPage() {
         name: "",
         description: "",
         price: 0,
-        image: ""
+        image: "",
+        compatibility: [] as { make: string; model: string; variant: string }[]
     });
 
     useEffect(() => {
@@ -30,7 +33,8 @@ export default function SubServiceDetailsPage() {
                 name: subServiceData.subService.name,
                 description: subServiceData.subService.description,
                 price: subServiceData.subService.price,
-                image: subServiceData.subService.image || ""
+                image: subServiceData.subService.image || "",
+                compatibility: subServiceData.subService.compatibility || []
             });
         }
     }, [subServiceData]);
@@ -99,6 +103,14 @@ export default function SubServiceDetailsPage() {
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
                             />
                         </div>
+                    </div>
+
+                    <CompatibilityManager
+                        compatibility={formData.compatibility}
+                        onChange={(newCompatibility) => setFormData({ ...formData, compatibility: newCompatibility })}
+                    />
+
+                    <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
                         <button type="submit" disabled={updateSubService.isPending} className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium transition-colors disabled:opacity-50">
                             <Save className="w-4 h-4" />
                             {updateSubService.isPending ? 'Saving...' : 'Save Changes'}

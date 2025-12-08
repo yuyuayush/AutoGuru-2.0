@@ -50,4 +50,10 @@ export type SubService = {
     description: string;
     price: number;
     image?: string;
+    serviceId?: string;
+    compatibility?: {
+        make: string;
+        model: string;
+        variant: string;
+    }[];
 };

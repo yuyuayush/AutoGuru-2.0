@@ -1,11 +1,23 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { carServiceApi } from "@/lib/api";
 import { toast } from "sonner";
-
 export const useCarServices = (params?: any) => {
     return useQuery({
         queryKey: ["carServices", params],
         queryFn: () => carServiceApi.getAllServices(params),
+    });
+};
+
+export const useCompatibleServices = (vehicle: any) => {
+    return useQuery({
+        queryKey: ["compatibleServices", vehicle],
+        queryFn: () => carServiceApi.getCompatibleServices({
+            make: vehicle?.make,
+            model: vehicle?.model,
+            variant: vehicle?.variant
+        }),
+        enabled: !!vehicle,
+        select: (data: any) => data.services
     });
 };
 
