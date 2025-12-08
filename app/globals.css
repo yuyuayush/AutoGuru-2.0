@@ -1,94 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
 @import "tailwindcss";
 
+
+@theme {
+  /* --- Colors --- */
+  --color-primary: #bf953f;
+  --color-primary-light: #c6ba37;
+  --color-primary-dark: #b38728;
+  --color-primary-start: #c4912c;
+  --color-primary-glow: #fcf6ba;
+
+  --color-secondary: #171717;
+  --color-secondary-border: #404040;
+  
+  --color-background-soft: rgba(38, 38, 38, 0.2);
+
+  --color-foreground-muted: #9ca3af;
+  --color-foreground-dim: #d1d5db;
+  
+  /* Fonts */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui;
+  --font-serif: "Playfair Display", serif;
+}
+
+/* --- MANUAL UTILITY CLASSES --- 
+*/
+
+.bg-gold-gradient {
+  background-image: linear-gradient(to right, #c4912c, #c6ba37, #b38728);
+}
+
+.bg-hero-fade {
+  background-image: linear-gradient(to top, #000000, rgba(0, 0, 0, 0.2), transparent);
+}
+
+/*NOISE TEXTURE*/
+.bg-noise {
+  position: relative;
+}
+.bg-noise::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  opacity: 0.07;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --- PREMIUM UTILITIES --- */
+
+.bg-gold-gradient {
+  background-image: linear-gradient(135deg, #c4912c 0%, #fcf6ba 50%, #b38728 100%);
+  background-size: 200% auto;
+  transition: background-position 0.5s ease;
+}
+.bg-gold-gradient:hover {
+  background-position: right center;
+}
+
+.bg-hero-fade {
+  background-image: linear-gradient(to top, #000000 10%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+}
+
+.glass-panel {
+  background: rgba(23, 23, 23, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* --- Base Styles --- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #ffffff;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-accent: #e63946;
-  --color-accent-hover: #d62828;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* --background: #0a0a0a; */
-    --foreground: #0a0a0a;
-  }
-}
+
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
 }
 
-/* Additional styles for AutoGuru website */
+/* --- Component Styles --- */
 .service-card {
   transition: all 0.3s ease;
 }
 
 .service-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 25px -5px rgba(191, 149, 63, 0.15);
 }
 
-.step-indicator {
-  transition: all 0.3s ease;
-}
-
-.active-step {
-  background-color: #2563eb;
-  color: white;
-}
-
-.inactive-step {
-  background-color: #e5e7eb;
-  color: #6b7280;
-}
-
-/* Animation classes */
+/* --- Animations --- */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fadeIn {
   animation: fadeIn 0.6s ease-out forwards;
-}
-
-.delay-100 {
-  animation-delay: 0.1s;
-}
-
-/* Stat items animation */
-.stat-item {
-  opacity: 0;
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-.stat-item:nth-child(1) {
-  animation-delay: 0.2s;
-}
-
-.stat-item:nth-child(2) {
-  animation-delay: 0.4s;
-}
-
-.stat-item:nth-child(3) {
-  animation-delay: 0.6s;
-}
-
-.stat-item:nth-child(4) {
-  animation-delay: 0.8s;
 }
