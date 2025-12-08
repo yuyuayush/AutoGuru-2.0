@@ -72,22 +72,27 @@ export default function MechanicsPage() {
             accessorKey: "businessName",
             header: "Business Name",
             cell: ({ row }) => (
-                <div>
-                    <div className="font-medium text-gray-900">{row.getValue("businessName") || 'N/A'}</div>
-                    <div className="text-xs text-gray-500">{row.original.userId?.email}</div>
+                <div className="flex items-center">
+                    <div className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-800 flex items-center justify-center text-white font-medium">
+                        {row.original.businessName.charAt(0)}
+                    </div>
+                    <div className="ml-4">
+                        <div className="font-medium text-[var(--table-text-cell)]">{row.getValue("businessName") || 'N/A'}</div>
+                        <div className="text-gray-400">{row.original.contactName}</div>
+                    </div>
                 </div>
             ),
         },
         {
             accessorKey: "contactName",
             header: "Contact Person",
-            cell: ({ row }) => <div className="text-gray-600">{row.original.userId ? `${row.original.userId.firstName} ${row.original.userId.lastName}` : 'N/A'}</div>,
+            cell: ({ row }) => <div className="text-gray-400">{row.original.userId ? `${row.original.userId.firstName} ${row.original.userId.lastName}` : 'N/A'}</div>,
         },
         {
             accessorKey: "address",
             header: "Location",
             cell: ({ row }) => (
-                <div className="flex items-center gap-1 text-gray-600">
+                <div className="flex items-center gap-1 text-gray-400">
                     <MapPin className="w-3 h-3" />
                     <span>{row.original.address?.suburb}, {row.original.address?.state}</span>
                 </div>
@@ -97,10 +102,10 @@ export default function MechanicsPage() {
             accessorKey: "rating",
             header: "Rating",
             cell: ({ row }) => (
-                <div className="flex items-center text-gray-600">
+                <div className="flex items-center text-gray-400">
                     <Star className="w-3 h-3 text-yellow-500 mr-1 fill-current" />
                     {row.original.rating?.average?.toFixed(1) || '0.0'}
-                    <span className="text-xs text-gray-400 ml-1">({row.original.rating?.count})</span>
+                    <span className="text-xs text-gray-500 ml-1">({row.original.rating?.count})</span>
                 </div>
             ),
         },
@@ -174,8 +179,8 @@ export default function MechanicsPage() {
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Mechanics</h1>
-                    <p className="text-gray-500 mt-1">Manage registered mechanics and approvals</p>
+                    <h1 className="text-2xl font-bold text-white">Mechanics</h1>
+                    <p className="text-gray-400 mt-1">Manage registered mechanics and approvals</p>
                 </div>
                 <button
                     onClick={() => setIsAddModalOpen(true)}

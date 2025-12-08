@@ -9,7 +9,6 @@ import { DeleteModal } from "@/components/ui/DeleteModal";
 import { toast } from "sonner";
 import { useGetAllUsers } from "@/hooks/useAdmin";
 import { format } from "date-fns";
-import { TableSkeleton } from "@/components/skeletons/TableSkeleton";
 
 type User = {
     _id: string;
@@ -39,7 +38,7 @@ const getRandomColor = (name: string) => {
     return colors[Math.abs(hash) % colors.length];
 };
 
-export default function UsersPage() {
+export default function CustomersPage() {
     const { data: usersData, isLoading } = useGetAllUsers();
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -57,7 +56,8 @@ export default function UsersPage() {
     };
 
     const confirmDelete = () => {
-        toast.success(`User ${selectedUser?.firstName} deleted`);
+        // In a real app, you would call a delete mutation here
+        toast.success(`Customer ${selectedUser?.firstName} deleted`);
         setIsDeleteModalOpen(false);
         setSelectedUser(null);
     };
@@ -88,21 +88,6 @@ export default function UsersPage() {
             accessorKey: "email",
             header: "Email",
             cell: ({ row }) => <div className="text-gray-400">{row.getValue("email")}</div>,
-        },
-        {
-            accessorKey: "role",
-            header: "Role",
-            cell: ({ row }) => {
-                const role = row.getValue("role") as string;
-                return (
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${role === 'admin' ? 'bg-purple-900/30 text-purple-400' :
-                        role === 'mechanic' ? 'bg-blue-900/30 text-blue-400' :
-                            'bg-gray-800 text-gray-400'
-                        } capitalize`}>
-                        {role}
-                    </span>
-                );
-            },
         },
         {
             accessorKey: "createdAt",
@@ -140,34 +125,37 @@ export default function UsersPage() {
         },
     ];
 
-
+    if (isLoading) {
+        return <div className="flex justify-center items-center h-96"><Loader2 className="w-8 h-8 animate-spin text-blue-600" /></div>;
+    }
 
     // Handle API response structure (checking if data.data or data contains the array)
-    const users = Array.isArray(usersData?.data) ? usersData.data : (Array.isArray(usersData) ? usersData : []);
+    // Filter for only 'user' role
+    const allUsers = Array.isArray(usersData?.data) ? usersData.data : (Array.isArray(usersData) ? usersData : []);
+    // Ensure we are robust against missing role (though schema implies it exists)
+    const customers = allUsers.filter((user: User) => user.role === 'user');
 
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-2xl font-bold text-white">Users</h1>
-                    <p className="text-gray-400 mt-1">Manage platform users</p>
+                    <h1 className="text-2xl font-bold text-white">Customers</h1>
+                    <p className="text-gray-400 mt-1">Manage registered customers</p>
                 </div>
                 <button
                     onClick={() => setIsAddModalOpen(true)}
                     className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors"
                 >
                     <Plus className="w-4 h-4" />
-                    Add User
+                    Add Customer
                 </button>
             </div>
-            {isLoading ? (
-                <TableSkeleton showSearch={true} showAddButton={false} />
-            ) : (
-                <DataTable columns={columns} data={users} searchKey="firstName" searchPlaceholder="Search users..." />
-            )}
-            {/* Add User Modal */}
-            <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="Add New User">
-                <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); toast.success("User added"); setIsAddModalOpen(false); }}>
+
+            <DataTable columns={columns} data={customers} searchKey="firstName" searchPlaceholder="Search customers..." />
+
+            {/* Add Customer Modal */}
+            <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="Add New Customer">
+                <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); toast.success("Customer added"); setIsAddModalOpen(false); }}>
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-400 mb-1">First Name</label>
@@ -182,24 +170,17 @@ export default function UsersPage() {
                         <label className="block text-sm font-medium text-gray-400 mb-1">Email</label>
                         <input type="email" className="w-full px-3 py-2 bg-gray-900 border border-gray-700 text-white rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" placeholder="john@example.com" />
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-1">Role</label>
-                        <select className="w-full px-3 py-2 bg-gray-900 border border-gray-700 text-white rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500">
-                            <option value="customer">Customer</option>
-                            <option value="mechanic">Mechanic</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </div>
+                    {/* Role is hidden/defaulted to Customer for this page */}
                     <div className="pt-4 flex justify-end gap-3">
                         <button type="button" onClick={() => setIsAddModalOpen(false)} className="px-4 py-2 text-gray-400 hover:bg-gray-800 rounded-md text-sm font-medium">Cancel</button>
-                        <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium">Add User</button>
+                        <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium">Add Customer</button>
                     </div>
                 </form>
             </Modal>
 
-            {/* Edit User Modal */}
-            <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} title="Edit User">
-                <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); toast.success("User updated"); setIsEditModalOpen(false); }}>
+            {/* Edit Customer Modal */}
+            <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} title="Edit Customer">
+                <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); toast.success("Customer updated"); setIsEditModalOpen(false); }}>
                     <div className="grid grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-400 mb-1">First Name</label>
@@ -214,14 +195,6 @@ export default function UsersPage() {
                         <label className="block text-sm font-medium text-gray-400 mb-1">Email</label>
                         <input type="email" defaultValue={selectedUser?.email} className="w-full px-3 py-2 bg-gray-900 border border-gray-700 text-white rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" />
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-1">Role</label>
-                        <select defaultValue={selectedUser?.role} className="w-full px-3 py-2 bg-gray-900 border border-gray-700 text-white rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500">
-                            <option value="customer">Customer</option>
-                            <option value="mechanic">Mechanic</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </div>
                     <div className="pt-4 flex justify-end gap-3">
                         <button type="button" onClick={() => setIsEditModalOpen(false)} className="px-4 py-2 text-gray-400 hover:bg-gray-800 rounded-md text-sm font-medium">Cancel</button>
                         <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 text-sm font-medium">Save Changes</button>
@@ -234,7 +207,7 @@ export default function UsersPage() {
                 isOpen={isDeleteModalOpen}
                 onClose={() => setIsDeleteModalOpen(false)}
                 onConfirm={confirmDelete}
-                title="Delete User"
+                title="Delete Customer"
                 description={`Are you sure you want to delete ${selectedUser?.firstName} ${selectedUser?.lastName}? This action cannot be undone.`}
             />
         </div>

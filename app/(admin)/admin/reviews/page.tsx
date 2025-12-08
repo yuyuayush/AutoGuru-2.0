@@ -47,12 +47,12 @@ export default function ReviewsPage() {
         {
             accessorKey: "reviewerName",
             header: "Reviewer",
-            cell: ({ row }) => <div className="font-medium text-gray-900">{row.getValue("reviewerName")}</div>,
+            cell: ({ row }) => <div className="font-medium text-[var(--table-text-cell)]">{row.getValue("reviewerName")}</div>,
         },
         {
             accessorKey: "mechanicName",
             header: "Mechanic",
-            cell: ({ row }) => <div className="text-gray-600">{row.getValue("mechanicName")}</div>,
+            cell: ({ row }) => <div className="text-gray-400">{row.getValue("mechanicName")}</div>,
         },
         {
             accessorKey: "rating",
@@ -70,14 +70,14 @@ export default function ReviewsPage() {
         {
             accessorKey: "comment",
             header: "Comment",
-            cell: ({ row }) => <div className="text-gray-600 truncate max-w-xs" title={row.getValue("comment")}>{row.getValue("comment")}</div>,
+            cell: ({ row }) => <div className="text-gray-400 truncate max-w-xs" title={row.getValue("comment")}>{row.getValue("comment")}</div>,
         },
         {
             accessorKey: "createdAt",
             header: "Date",
             cell: ({ row }) => {
                 const date = row.getValue("createdAt") as string;
-                return <div className="text-gray-600">{date ? format(new Date(date), 'MMM d, yyyy') : 'N/A'}</div>;
+                return <div className="text-gray-400">{date ? format(new Date(date), 'MMM d, yyyy') : 'N/A'}</div>;
             },
         },
         {
@@ -114,16 +114,13 @@ export default function ReviewsPage() {
     }
 
     // Mock data
-    const data = (reviews && reviews.length > 0) ? reviews : [
-        { _id: '1', reviewerName: 'John Doe', mechanicName: 'AutoFix Pro', rating: 5, comment: 'Great service!', createdAt: '2023-11-20T10:00:00Z' },
-        { _id: '2', reviewerName: 'Jane Smith', mechanicName: 'Mechanic Mike', rating: 4, comment: 'Good job but expensive.', createdAt: '2023-11-18T15:00:00Z' },
-    ];
+    const data = (reviews && reviews.length > 0) ? reviews : [];
 
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-2xl font-bold text-gray-900">Reviews</h1>
-                <p className="text-gray-500 mt-1">Monitor user reviews and ratings</p>
+                <h1 className="text-2xl font-bold text-white">Reviews</h1>
+                <p className="text-gray-400 mt-1">Monitor user reviews and ratings</p>
             </div>
 
             <DataTable columns={columns} data={data} searchKey="reviewerName" searchPlaceholder="Search reviews..." />
@@ -132,26 +129,26 @@ export default function ReviewsPage() {
             <Modal isOpen={isViewModalOpen} onClose={() => setIsViewModalOpen(false)} title="Review Details">
                 <div className="space-y-4">
                     <div>
-                        <h4 className="text-sm font-medium text-gray-500">Reviewer</h4>
-                        <p className="text-gray-900">{selectedReview?.reviewerName}</p>
+                        <h4 className="text-sm font-medium text-gray-400">Reviewer</h4>
+                        <p className="text-gray-200">{selectedReview?.reviewerName}</p>
                     </div>
                     <div>
-                        <h4 className="text-sm font-medium text-gray-500">Mechanic</h4>
-                        <p className="text-gray-900">{selectedReview?.mechanicName}</p>
+                        <h4 className="text-sm font-medium text-gray-400">Mechanic</h4>
+                        <p className="text-gray-200">{selectedReview?.mechanicName}</p>
                     </div>
                     <div>
-                        <h4 className="text-sm font-medium text-gray-500">Rating</h4>
+                        <h4 className="text-sm font-medium text-gray-400">Rating</h4>
                         <div className="flex items-center text-yellow-500">
                             <span className="font-medium mr-1">{selectedReview?.rating}</span>
                             <Star className="w-4 h-4 fill-current" />
                         </div>
                     </div>
                     <div>
-                        <h4 className="text-sm font-medium text-gray-500">Comment</h4>
-                        <p className="text-gray-900 bg-gray-50 p-3 rounded-md text-sm">{selectedReview?.comment}</p>
+                        <h4 className="text-sm font-medium text-gray-400">Comment</h4>
+                        <p className="text-gray-300 bg-gray-800 p-3 rounded-md text-sm border border-gray-700">{selectedReview?.comment}</p>
                     </div>
                     <div className="pt-4 flex justify-end">
-                        <button onClick={() => setIsViewModalOpen(false)} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 text-sm font-medium">Close</button>
+                        <button onClick={() => setIsViewModalOpen(false)} className="px-4 py-2 bg-gray-800 text-gray-300 rounded-md hover:bg-gray-700 text-sm font-medium">Close</button>
                     </div>
                 </div>
             </Modal>

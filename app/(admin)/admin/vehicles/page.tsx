@@ -76,19 +76,19 @@ export default function VehiclesPage() {
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Vehicle Companies</h1>
+                    <h1 className="text-2xl font-bold ">Vehicle Companies</h1>
                     <p className="text-gray-500 mt-1">Manage vehicle companies and models</p>
                 </div>
                 <button
                     onClick={() => setIsAddModalOpen(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-blue-600  rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors"
                 >
                     <Plus className="w-4 h-4" />
                     Add Company
                 </button>
             </div>
 
-            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+            <div className="">
                 {isLoading ? (
                     <TableSkeleton showSearch={true} showAddButton={false} />
                 ) : (

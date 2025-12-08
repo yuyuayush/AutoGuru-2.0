@@ -8,10 +8,14 @@ export default function CarBatteryLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-black">
             <SearchHero
-                title="Car Battery Replacement"
-                subtitle="Get roadside assistance or find specialists near you"
+                title={
+                    <span>
+                        CAR BATTERY <span className="text-[#bf953f]">REPLACEMENT</span>
+                    </span>
+                }
+                subtitle="GET ROADSIDE ASSISTANCE OR FIND SPECIALISTS NEAR YOU"
                 backgroundImage="/car-service/car-battery.jpg"
             />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

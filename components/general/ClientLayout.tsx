@@ -4,7 +4,6 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/general/Navbar";
 import Footer from "@/components/general/Footer";
-import { Toaster } from "sonner";
 
 const ClientLayout = ({ children }: { children: React.ReactNode }) => {
     const pathname = usePathname();
@@ -24,7 +23,6 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
                 {children}
             </div>
             {!isAuthPage && <Footer />}
-            <Toaster />
         </>
     );
 };

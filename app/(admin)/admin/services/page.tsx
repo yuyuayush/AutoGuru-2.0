@@ -11,6 +11,7 @@ import { ImageUpload } from "@/components/ui/ImageUpload";
 import { useRouter } from "next/navigation";
 import { CarService } from "@/types";
 import { getServiceColumns } from "@/constants/tableColumns";
+import { TableSkeleton } from "@/components/skeletons/TableSkeleton";
 
 export default function ServicesPage() {
     const router = useRouter();
@@ -89,13 +90,7 @@ export default function ServicesPage() {
 
     const columns = getServiceColumns(handleEdit, handleDelete);
 
-    if (isLoading) {
-        return (
-            <div className="flex justify-center items-center h-96">
-                <Loader2 className="w-8 h-8 animate-spin text-red-600" />
-            </div>
-        );
-    }
+
 
     const data = services?.services || [];
     console.log(data);
@@ -103,8 +98,8 @@ export default function ServicesPage() {
         <div className="space-y-6">
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Services</h1>
-                    <p className="text-gray-500 mt-1">Manage car repair services</p>
+                    <h1 className="text-2xl font-bold text-white">Services</h1>
+                    <p className="text-gray-400 mt-1">Manage car repair services</p>
                 </div>
                 <button
                     onClick={() => {
@@ -117,8 +112,11 @@ export default function ServicesPage() {
                     Add Service
                 </button>
             </div>
-
-            <DataTable columns={columns} data={data} searchKey="title" searchPlaceholder="Search services..." />
+            {isLoading ? (
+                <TableSkeleton showSearch={true} showAddButton={false} />
+            ) : (
+                <DataTable columns={columns} data={data} searchKey="title" searchPlaceholder="Search services..." />
+            )}
 
             {/* Add Service Modal */}
             <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="Add New Service">

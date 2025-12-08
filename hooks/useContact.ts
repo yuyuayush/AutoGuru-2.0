@@ -18,6 +18,12 @@ export const useContact = () => {
 export const useInquiries = () => {
     return useQuery({
         queryKey: ["inquiries"],
-        queryFn: contactApi.getAllInquiries,
+        queryFn: contactApi.getAllContacts,
+    })
+}
+
+export const useUpdateContactStatus = () => {
+    return useMutation({
+        mutationFn: ({ id, status }: { id: string; status: string }) => contactApi.updateContactStatus(id, status),
     })
 }

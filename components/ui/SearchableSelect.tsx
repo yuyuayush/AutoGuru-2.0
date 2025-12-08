@@ -58,7 +58,7 @@ export function SearchableSelect({
                 className={cn(
                     "flex items-center justify-between w-full px-4 py-3 border rounded-sm cursor-pointer transition-colors text-sm",
                     // Default styles
-                    "bg-white border-gray-300 text-gray-900",
+                    "bg-white border-gray-300 text-white",
                     // Interactive states
                     !disabled && "hover:border-blue-400",
                     isOpen && "border-blue-500 ring-1 ring-blue-500",
@@ -81,7 +81,7 @@ export function SearchableSelect({
                     dropdownClassName
                 )}>
                     <div className="p-2 border-b border-gray-100 relative bg-opacity-50">
-                        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 " />
                         <input
                             type="text"
                             className={cn(
@@ -89,7 +89,7 @@ export function SearchableSelect({
                                 "border border-transparent focus:border-blue-500 placeholder-gray-400",
                                 // If parent passes dark text color logic in dropdownClassName, better ensure input is readable.
                                 // Defaulting to gray-900 for input text in standard dropdown.
-                                "text-gray-900"
+                                ""
                             )}
                             placeholder="Search..."
                             value={searchTerm}
@@ -105,8 +105,8 @@ export function SearchableSelect({
                                     key={option}
                                     className={cn(
                                         "px-3 py-2 text-left text-sm cursor-pointer rounded-sm transition-colors",
-                                        "hover:bg-gray-100 text-gray-700",
-                                        value === option && "bg-blue-50 text-blue-700 font-medium"
+                                        "hover:bg-gray-100 text-white",
+                                        value === option && "bg-blue-50 text-white font-medium"
                                     )}
                                     onClick={() => handleSelect(option)}
                                 >

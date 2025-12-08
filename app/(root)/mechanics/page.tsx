@@ -16,7 +16,7 @@ import {
 
 const MechanicsPage = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       {/* Top Search Section - Moved to Layout */}
 
       {/* Intro Section */}

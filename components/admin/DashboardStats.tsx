@@ -15,19 +15,19 @@ interface StatCardProps {
 
 const StatCard = ({ title, value, change, icon: Icon, trend }: StatCardProps) => {
     return (
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+        <div className="bg-[#111] p-6 rounded-xl shadow-sm border border-gray-800 hover:border-[#c4912c]/50 transition-colors group">
             <div className="flex items-center justify-between">
                 <div>
-                    <p className="text-sm font-medium text-gray-500">{title}</p>
-                    <h3 className="text-2xl font-bold text-gray-900 mt-1">{value}</h3>
+                    <p className="text-sm font-medium text-gray-400">{title}</p>
+                    <h3 className="text-3xl font-bold text-white mt-2 group-hover:text-[#c4912c] transition-colors">{value}</h3>
                 </div>
-                <div className="p-3 bg-blue-50 rounded-full">
-                    <Icon className="w-6 h-6 text-blue-600" />
+                <div className="p-3 bg-gray-900 rounded-xl border border-gray-800 group-hover:border-[#c4912c]/30 group-hover:bg-[#c4912c]/10 transition-all">
+                    <Icon className="w-6 h-6 text-[#c4912c]" />
                 </div>
             </div>
             <div className="mt-4 flex items-center text-sm">
-                <span className={`font-medium ${trend === "up" ? "text-green-600" :
-                    trend === "down" ? "text-red-600" : "text-gray-600"
+                <span className={`font-medium ${trend === "up" ? "text-green-500" :
+                    trend === "down" ? "text-red-500" : "text-gray-500"
                     }`}>
                     {change}
                 </span>

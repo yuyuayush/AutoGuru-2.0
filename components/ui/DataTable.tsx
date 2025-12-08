@@ -53,19 +53,19 @@ export function DataTable<TData, TValue>({
         <div className="space-y-4">
             <div className="flex items-center justify-between">
                 <div className="relative w-full max-w-sm">
-                    <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-500" />
+                    <Search className="absolute left-2 top-2.5 h-4 w-4 text-[var(--table-text-header)]" />
                     <input
                         placeholder={searchPlaceholder}
                         value={globalFilter ?? ""}
                         onChange={(event) => setGlobalFilter(event.target.value)}
-                        className="pl-8 h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="pl-8 h-10 w-full rounded-md border border-[var(--table-border)] bg-[var(--table-input-bg)] px-3 py-2 text-sm ring-offset-[var(--table-bg)] text-[var(--table-text-cell)] file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--table-text-header)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     />
                 </div>
             </div>
-            <div className="rounded-md border border-gray-200 bg-white overflow-hidden">
+            <div className="rounded-md border border-[var(--table-border)] bg-[var(--table-bg)] overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm text-left">
-                        <thead className="bg-gray-50 text-gray-500 border-b border-gray-100">
+                        <thead className="bg-[var(--table-header-bg)] text-[var(--table-text-header)] border-b border-[var(--table-border)]">
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <tr key={headerGroup.id}>
                                     {headerGroup.headers.map((header) => {
@@ -85,10 +85,10 @@ export function DataTable<TData, TValue>({
                                                             header.getContext()
                                                         )}
                                                         {{
-                                                            asc: <ArrowUpDown className="w-3 h-3 text-gray-400 rotate-180" />,
-                                                            desc: <ArrowUpDown className="w-3 h-3 text-gray-400" />,
+                                                            asc: <ArrowUpDown className="w-3 h-3 text-[var(--table-text-header)] rotate-180" />,
+                                                            desc: <ArrowUpDown className="w-3 h-3 text-[var(--table-text-header)]" />,
                                                         }[header.column.getIsSorted() as string] ?? (
-                                                                header.column.getCanSort() ? <ArrowUpDown className="w-3 h-3 text-gray-300 opacity-0 group-hover:opacity-100" /> : null
+                                                                header.column.getCanSort() ? <ArrowUpDown className="w-3 h-3 text-[var(--table-text-header)] opacity-0 group-hover:opacity-100" /> : null
                                                             )}
                                                     </div>
                                                 )}
@@ -98,13 +98,13 @@ export function DataTable<TData, TValue>({
                                 </tr>
                             ))}
                         </thead>
-                        <tbody className="divide-y divide-gray-100">
+                        <tbody className="divide-y divide-[var(--table-border)]">
                             {table.getRowModel().rows?.length ? (
                                 table.getRowModel().rows.map((row) => (
                                     <tr
                                         key={row.id}
                                         data-state={row.getIsSelected() && "selected"}
-                                        className="hover:bg-gray-50 transition-colors"
+                                        className="hover:bg-[var(--table-row-hover)] transition-colors text-[var(--table-text-cell)]"
                                     >
                                         {row.getVisibleCells().map((cell) => (
                                             <td key={cell.id} className="px-6 py-4">
@@ -132,14 +132,14 @@ export function DataTable<TData, TValue>({
             </div>
             <div className="flex items-center justify-end space-x-2 py-4">
                 <button
-                    className="px-4 py-2 border border-gray-200 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-4 py-2 border border-[var(--table-border)] rounded-md text-sm font-medium text-[var(--table-text-cell)] hover:bg-[var(--table-row-hover)] disabled:opacity-50 disabled:cursor-not-allowed"
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                 >
                     Previous
                 </button>
                 <button
-                    className="px-4 py-2 border border-gray-200 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-4 py-2 border border-[var(--table-border)] rounded-md text-sm font-medium text-[var(--table-text-cell)] hover:bg-[var(--table-row-hover)] disabled:opacity-50 disabled:cursor-not-allowed"
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                 >

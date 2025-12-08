@@ -32,7 +32,7 @@ const SupplierHero = () => {
 
 
                             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                                Join Australia's #1 booking site for auto repairers.
+                                Join Australia's #1 <span className="text-[#bf953f]">booking site</span> for auto repairers.
                             </h1>
                             <p className="text-xl text-gray-300 mb-8 font-light leading-relaxed max-w-xl">
                                 Become a member of a network that's recognised and trusted nationally by Aussie car owners.

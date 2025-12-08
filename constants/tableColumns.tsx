@@ -14,19 +14,19 @@ export const getVehicleMakeColumns = (
             cell: ({ row }) => (
                 <div className="flex items-center">
                     <img src={row.original.image} alt={row.original.name} className="w-8 h-8 mr-3 object-contain" />
-                    <div className="font-medium text-gray-900">{row.getValue("name")}</div>
+                    <div className="font-medium text-[var(--table-text-cell)]">{row.getValue("name")}</div>
                 </div>
             ),
         },
         {
             accessorKey: "models",
             header: "Models",
-            cell: ({ row }) => <div className="text-gray-600">{row.original.models.length} Models</div>,
+            cell: ({ row }) => <div className="text-gray-400">{row.original.models.length} Models</div>,
         },
         {
             accessorKey: "description",
             header: "Description",
-            cell: ({ row }) => <div className="text-gray-600 truncate max-w-md">{row.getValue("description")}</div>,
+            cell: ({ row }) => <div className="text-gray-400 truncate max-w-md">{row.getValue("description")}</div>,
         },
         {
             id: "actions",
@@ -63,14 +63,14 @@ export const getVehicleModelColumns = (
             cell: ({ row }) => (
                 <div className="flex items-center">
                     <img src={row.original.image} alt={row.original.name} className="w-10 h-8 mr-3 object-cover rounded" />
-                    <div className="font-medium text-gray-900">{row.getValue("name")}</div>
+                    <div className="font-medium text-[var(--table-text-cell)]">{row.getValue("name")}</div>
                 </div>
             ),
         },
         {
             accessorKey: "description",
             header: "Description",
-            cell: ({ row }) => <div className="text-gray-600 truncate max-w-md">{row.getValue("description")}</div>,
+            cell: ({ row }) => <div className="text-gray-400 truncate max-w-md">{row.getValue("description")}</div>,
         },
         {
             id: "actions",
@@ -114,7 +114,7 @@ export const getServiceColumns = (
                         </div>
                     )}
                     <div>
-                        <div className="font-medium text-gray-900">{row.getValue("title")}</div>
+                        <div className="font-medium text-[var(--table-text-cell)]">{row.getValue("title")}</div>
                         <div className="text-xs text-gray-500">/{row.original.slug}</div>
                     </div>
                 </div>
@@ -123,12 +123,12 @@ export const getServiceColumns = (
         {
             accessorKey: "description",
             header: "Description",
-            cell: ({ row }) => <div className="text-gray-600 truncate max-w-xs">{row.getValue("description")}</div>,
+            cell: ({ row }) => <div className="text-gray-400 truncate max-w-xs">{row.getValue("description")}</div>,
         },
         {
             accessorKey: "features",
             header: "Features",
-            cell: ({ row }) => <div className="text-gray-600">{row.original.features?.length || 0} features</div>,
+            cell: ({ row }) => <div className="text-gray-400">{row.original.features?.length || 0} features</div>,
         },
         {
             accessorKey: "isActive",
@@ -177,7 +177,7 @@ export const getSubServiceColumns = (
                     {row.original.image && (
                         <img src={row.original.image} alt={row.original.name} className="w-8 h-8 mr-3 object-cover rounded" />
                     )}
-                    <div className="font-medium text-gray-900">{row.getValue("name")}</div>
+                    <div className="font-medium text-[var(--table-text-cell)]">{row.getValue("name")}</div>
                 </div>
             ),
         },
@@ -187,13 +187,13 @@ export const getSubServiceColumns = (
             cell: ({ row }) => {
                 const description = row.getValue("description") as string;
                 const plainText = description?.replace(/<[^>]*>?/gm, '') || "";
-                return <div className="text-gray-600 truncate max-w-xs">{plainText}</div>;
+                return <div className="text-gray-400 truncate max-w-xs">{plainText}</div>;
             },
         },
         {
             accessorKey: "price",
             header: "Price",
-            cell: ({ row }) => <div className="text-gray-600">${row.getValue("price")}</div>,
+            cell: ({ row }) => <div className="text-gray-400">${row.getValue("price")}</div>,
         },
         {
             id: "actions",

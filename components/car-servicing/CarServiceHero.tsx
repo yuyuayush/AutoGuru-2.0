@@ -38,19 +38,19 @@ export default function CarServiceHero() {
     const featuredBrands = VehicleCompanies?.brands?.slice(0, 8) || [];
 
     return (
-        <div className="w-full bg-white py-12 md:py-20">
+        <div className="w-full py-12 md:py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
 
                     {/* Left Column: Content */}
                     <div className="w-full lg:w-1/2 flex flex-col items-start text-left">
-                        <h1 className="text-4xl md:text-5xl font-serif text-gray-900 mb-6 leading-tight">
-                            Compare car service quotes on the most popular car makes
+                        <h1 className="text-4xl md:text-5xl font-serif text-white mb-6 leading-tight">
+                            Compare car service <span className="text-[#bf953f]">quotes</span> on the most popular car makes
                         </h1>
 
                         {/* Rating Section */}
                         <div className="mb-10">
-                            <p className="text-xs font-bold text-gray-500 tracking-wider uppercase mb-2">
+                            <p className="text-xs font-bold tracking-wider uppercase mb-2">
                                 AVERAGE CUSTOMER RATING
                             </p>
                             <div className="flex items-center gap-2">
@@ -61,7 +61,7 @@ export default function CarServiceHero() {
                                         </svg>
                                     ))}
                                 </div>
-                                <span className="text-gray-900 font-medium text-sm">
+                                <span className=" font-medium text-sm">
                                     4.8 • 140,252 REVIEWS
                                 </span>
                             </div>
@@ -74,7 +74,7 @@ export default function CarServiceHero() {
                                     <Link
                                         key={brand.slug}
                                         href={`/car-servicing/${brand.slug}`}
-                                        className="flex items-center justify-center bg-black text-white py-3 px-4 rounded text-sm font-medium hover:bg-gray-800 transition-colors text-center"
+                                        className="flex items-center justify-center bg-white text-black py-3 px-4 rounded text-sm font-medium hover:bg-gray-800 transition-colors text-center"
                                     >
                                         {brand.name}
                                     </Link>

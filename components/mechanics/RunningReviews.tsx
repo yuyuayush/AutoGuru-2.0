@@ -70,10 +70,10 @@ const RunningReviews: React.FC<RunningReviewsProps> = ({ reviews }) => {
                         {duplicatedReviews.map((review, index) => (
                             <div
                                 key={`${review.id}-${index}`}
-                                className="bg-white rounded-lg p-8 shadow-lg transform transition-transform hover:-translate-y-2 duration-300 w-[400px] flex-shrink-0 whitespace-normal"
+                                className="bg-[#111] rounded-lg p-8 shadow-lg transform transition-transform hover:-translate-y-2 duration-300 w-[400px] flex-shrink-0 whitespace-normal border border-white/10"
                             >
                                 <div className="flex items-start gap-4 mb-6">
-                                    <div className="relative w-16 h-12 rounded overflow-hidden flex-shrink-0 bg-gray-200">
+                                    <div className="relative w-16 h-12 rounded overflow-hidden flex-shrink-0 bg-gray-800">
                                         <Image
                                             src={review.image}
                                             alt={review.car}
@@ -83,22 +83,22 @@ const RunningReviews: React.FC<RunningReviewsProps> = ({ reviews }) => {
                                     </div>
                                     <div className="flex-grow">
                                         <div className="flex justify-between items-start">
-                                            <h4 className="font-bold text-lg text-gray-900">{review.customer}</h4>
+                                            <h4 className="font-bold text-lg text-white">{review.customer}</h4>
                                             <div className="flex items-center gap-1">
-                                                <span className="font-bold text-sm text-gray-900">{review.rating}.0</span>
-                                                <Star size={12} className="text-yellow-400 fill-yellow-400" />
+                                                <span className="font-bold text-sm text-white">{review.rating}.0</span>
+                                                <Star size={12} className="text-[#bf953f] fill-[#bf953f]" />
                                             </div>
                                         </div>
                                         <div className="flex justify-between items-center mt-1">
-                                            <p className="text-xs text-gray-500">{review.car}</p>
-                                            <span className="text-xs text-gray-400">{review.date}</span>
+                                            <p className="text-xs text-gray-400">{review.car}</p>
+                                            <span className="text-xs text-gray-500">{review.date}</span>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className="mb-4">
-                                    <h5 className="font-bold text-sm text-gray-900 mb-2">{review.mechanic}</h5>
-                                    <p className="text-sm text-gray-600 leading-relaxed line-clamp-3">
+                                    <h5 className="font-bold text-sm text-gray-200 mb-2">{review.mechanic}</h5>
+                                    <p className="text-sm text-gray-400 leading-relaxed line-clamp-3">
                                         {review.review}
                                     </p>
                                 </div>

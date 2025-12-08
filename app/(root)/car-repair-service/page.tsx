@@ -87,13 +87,13 @@ const HomeServiceRepairingPage = () => {
   }) || [];
 
   return (
-    <div className="bg-white">
+    <div className="min-h-screen">
       {/* Header Section */}
-      <section className="py-8 bg-gray-50 border-b border-gray-100" ref={sectionRefs.hero}>
+      <section className="pt-12 pb-4 bg-black" ref={sectionRefs.hero}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-left">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
-              Car Repairs
+            <h1 className="text-3xl md:text-4xl font-bold uppercase tracking-wider">
+              <span className="text-white">CAR</span> <span className="text-[#bf953f]">REPAIRS</span>
             </h1>
           </div>
         </div>

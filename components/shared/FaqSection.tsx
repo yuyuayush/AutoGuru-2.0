@@ -27,26 +27,26 @@ const FaqSection: React.FC<FaqSectionProps> = ({
     };
 
     return (
-        <section className="py-16 md:py-24 max-w-4xl mx-auto px-6 lg:px-8">
+        <section className="py-16 md:py-24 max-w-4xl mx-auto px-6 lg:px-8 bg-black">
             <div className="text-center mb-12">
-                <h2 className="text-lg font-medium text-gray-600 mb-2">{title}</h2>
-                <h3 className="text-3xl md:text-4xl font-light text-gray-900">
+                <h2 className="text-lg font-medium text-gray-400 mb-2">{title}</h2>
+                <h3 className="text-3xl md:text-4xl font-light text-white">
                     {subtitle}
                 </h3>
             </div>
 
             <div className="space-y-4">
                 {faqs.map((faq, index) => (
-                    <div key={index} className="bg-blue-50/50 rounded-lg overflow-hidden">
+                    <div key={index} className="bg-white/5 rounded-lg overflow-hidden border border-white/10">
                         <button
                             onClick={() => toggleFaq(index)}
-                            className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-blue-50 transition-colors"
+                            className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-white/10 transition-colors"
                         >
-                            <span className="font-medium text-gray-700">{faq.question}</span>
+                            <span className="font-medium text-gray-200">{faq.question}</span>
                             {openFaqIndex === index ? (
-                                <ChevronUp className="w-5 h-5 text-gray-500" />
+                                <ChevronUp className="w-5 h-5 text-gray-400" />
                             ) : (
-                                <ChevronDown className="w-5 h-5 text-gray-500" />
+                                <ChevronDown className="w-5 h-5 text-gray-400" />
                             )}
                         </button>
                         <AnimatePresence>
@@ -57,7 +57,7 @@ const FaqSection: React.FC<FaqSectionProps> = ({
                                     exit={{ height: 0, opacity: 0 }}
                                     transition={{ duration: 0.3 }}
                                 >
-                                    <div className="px-6 pb-6 text-gray-600 leading-relaxed">
+                                    <div className="px-6 pb-6 text-gray-400 leading-relaxed">
                                         {faq.answer}
                                     </div>
                                 </motion.div>

@@ -33,14 +33,14 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
             onClick={onClose}
         >
             <div
-                className="bg-white rounded-lg shadow-xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200"
+                className="bg-[var(--modal-bg)] rounded-xl shadow-xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200 border border-[var(--modal-border)]"
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className="flex justify-between items-center p-4 border-b border-gray-100">
-                    <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+                <div className="flex justify-between items-center p-4 border-b border-[var(--modal-border)]">
+                    <h3 className="text-lg font-semibold text-[var(--modal-text-title)]">{title}</h3>
                     <button
                         onClick={onClose}
-                        className="text-gray-400 hover:text-gray-600 transition-colors p-1 rounded-full hover:bg-gray-100"
+                        className="text-[var(--modal-close-icon)] hover:text-white transition-colors p-1 rounded-full hover:bg-[var(--modal-close-hover-bg)]"
                     >
                         <X className="w-5 h-5" />
                     </button>

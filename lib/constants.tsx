@@ -275,6 +275,7 @@ export const PRICING_PACKAGES = [
 
 export const NAV_LINKS = [
   { name: "Car Servicing", href: "/car-servicing" },
+  { name: "Car Repair", href: "/car-repair-service" },
   { name: "Battery & Tyre", href: "/car-battery" },
   { name: "Car Wash", href: "/car-wash" },
 
