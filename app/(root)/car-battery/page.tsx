@@ -18,7 +18,7 @@ import {
 
 const CarBatteryPage = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       {/* Intro Section */}
       <IntroSection
         image="/car-service/car-battery.jpg"

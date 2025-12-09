@@ -18,19 +18,19 @@ const DirectorySection: React.FC<DirectorySectionProps> = ({ title, locations, b
     const [activeState, setActiveState] = useState(locations[0]?.state || "NSW");
 
     return (
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-black">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-8">{title}</h2>
+                <h2 className="text-2xl font-bold text-white mb-8">{title}</h2>
 
                 {/* Tabs */}
-                <div className="flex border-b border-gray-200 mb-8 overflow-x-auto">
+                <div className="flex border-b border-white/10 mb-8 overflow-x-auto">
                     {locations.map((loc) => (
                         <button
                             key={loc.state}
                             onClick={() => setActiveState(loc.state)}
                             className={`px-6 py-3 text-sm font-medium transition-colors whitespace-nowrap ${activeState === loc.state
-                                    ? "border-b-2 border-blue-600 text-blue-600"
-                                    : "text-gray-500 hover:text-gray-700"
+                                ? "border-b-2 border-[#bf953f] text-[#bf953f]"
+                                : "text-gray-400 hover:text-gray-200"
                                 }`}
                         >
                             {loc.state}
@@ -44,7 +44,7 @@ const DirectorySection: React.FC<DirectorySectionProps> = ({ title, locations, b
                         <Link
                             key={suburb}
                             href={`${baseUrl}/${activeState.toLowerCase()}/${suburb.toLowerCase().replace(/\s+/g, '-')}`}
-                            className="text-sm text-gray-600 hover:text-blue-600 transition-colors"
+                            className="text-sm text-gray-300 hover:text-[#bf953f] transition-colors"
                         >
                             {suburb}
                         </Link>

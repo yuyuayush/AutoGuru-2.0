@@ -21,23 +21,40 @@ export default function AdminLayout({
         setIsClient(true);
     }, []);
 
+    useEffect(() => {
+        if (isClient) {
+            if (!isAuthenticated || user?.role !== 'admin') {
+                router.replace("/admin/login");
+            }
+        }
+    }, [isClient, isAuthenticated, user, router]);
 
     if (!isClient) return null;
 
-    // if (!isAuthenticated) {
-
-    //     if (pathname !== "/admin/login") { 
-    //         router.push("/admin/login");
-    //     }
-    //     return (
-    //         <div className="h-screen w-screen flex items-center justify-center">
-    //             <Loader2 className="w-8 h-8 animate-spin text-red-600" />
-    //         </div>
-    //     );
-    // }
+    if (!isAuthenticated || user?.role !== 'admin') {
+        return (
+            <div className="h-screen w-screen flex items-center justify-center bg-gray-50">
+                <Loader2 className="w-8 h-8 animate-spin text-[#bf953f]" />
+            </div>
+        );
+    }
 
     return (
-        <div className="flex min-h-screen bg-gray-50">
+        <div className="flex min-h-screen bg-black text-white" style={{
+            // @ts-ignore
+            '--table-bg': '#111111',
+            '--table-header-bg': '#18181b', // zinc-900
+            '--table-border': '#27272a', // zinc-800
+            '--table-text-header': '#9ca3af', // gray-400
+            '--table-text-cell': '#e5e7eb', // gray-200
+            '--table-row-hover': '#27272a', // zinc-800
+            '--table-input-bg': '#18181b',
+            '--modal-bg': '#111111',
+            '--modal-border': '#27272a', // zinc-800
+            '--modal-text-title': '#ffffff',
+            '--modal-close-icon': '#9ca3af', // gray-400
+            '--modal-close-hover-bg': '#27272a', // zinc-800
+        } as React.CSSProperties}>
             <AdminSidebar />
             <div className="flex-1 flex flex-col">
                 <AdminHeader />

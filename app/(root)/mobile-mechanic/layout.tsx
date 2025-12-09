@@ -8,10 +8,14 @@ export default function MobileMechanicLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-black">
             <SearchHero
-                title="Mobile Mechanics that come to you."
-                subtitle="Book one of our 1,700 awesome mobile mechanics."
+                title={
+                    <span>
+                        MOBILE <span className="text-[#bf953f]">MECHANICS</span> THAT COME TO YOU
+                    </span>
+                }
+                subtitle="BOOK ONE OF OUR 1,700 AWESOME MOBILE MECHANICS."
                 backgroundImage="/car-service/car-service-banner-bg.jpg"
             />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

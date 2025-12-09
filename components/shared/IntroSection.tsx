@@ -44,14 +44,14 @@ const IntroSection: React.FC<IntroSectionProps> = ({
 
                 {/* Text Content */}
                 <div className="space-y-6">
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
+                    <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">
                         {title}
                     </h1>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-gray-300 leading-relaxed">
                         {description}
                     </p>
                     {subDescription && (
-                        <p className="text-gray-600 leading-relaxed">
+                        <p className="text-gray-300 leading-relaxed">
                             {subDescription}
                         </p>
                     )}

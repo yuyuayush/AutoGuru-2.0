@@ -23,19 +23,19 @@ const DynamicBreadcrumbs = () => {
     if (pathname === '/') return null;
 
     return (
-        <nav className="flex text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
+        <nav className="flex text-sm text-gray-400 mb-6" aria-label="Breadcrumb">
             <ol className="inline-flex items-center space-x-1 md:space-x-3">
                 {breadcrumbs.map((item, index) => {
                     const isLast = index === breadcrumbs.length - 1;
                     return (
                         <li key={index} className="inline-flex items-center">
                             {index > 0 && (
-                                <span className="mx-2 text-gray-400">/</span>
+                                <span className="mx-2 text-gray-600">/</span>
                             )}
                             {isLast ? (
-                                <span className="text-gray-900 font-medium">{item.label}</span>
+                                <span className="text-white font-medium">{item.label}</span>
                             ) : (
-                                <Link href={item.href} className="hover:text-blue-600 hover:underline transition-colors">
+                                <Link href={item.href} className="hover:text-primary hover:underline transition-colors">
                                     {item.label}
                                 </Link>
                             )}

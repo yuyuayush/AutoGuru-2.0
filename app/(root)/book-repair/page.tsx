@@ -76,171 +76,85 @@ const BookRepairPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen py-8">
       <div className="max-w-4xl mx-auto px-4">
-        <div className="bg-white rounded-xl shadow-lg p-6">
+        <div className="bg-[#111] rounded-xl shadow-xl p-6 border border-white/10">
           <div className="mb-8">
-            <h1 className="text-2xl font-bold text-gray-900">Book a Repair</h1>
+            <h1 className="text-2xl font-bold text-white">Book a Repair</h1>
             <div className="mt-4 flex items-center">
-              <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  step >= 1 ? "bg-blue-600 text-white" : "bg-gray-200"
-                }`}
-              >
-                1
-              </div>
-              <div className={`h-1 flex-1 mx-2 ${step >= 2 ? "bg-blue-600" : "bg-gray-200"}`}></div>
-              <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  step >= 2 ? "bg-blue-600 text-white" : "bg-gray-200"
-                }`}
-              >
-                2
-              </div>
-              <div className={`h-1 flex-1 mx-2 ${step >= 3 ? "bg-blue-600" : "bg-gray-200"}`}></div>
-              <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  step >= 3 ? "bg-blue-600 text-white" : "bg-gray-200"
-                }`}
-              >
-                3
-              </div>
-              <div className={`h-1 flex-1 mx-2 ${step >= 4 ? "bg-blue-600" : "bg-gray-200"}`}></div>
-              <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  step >= 4 ? "bg-blue-600 text-white" : "bg-gray-200"
-                }`}
-              >
-                4
-              </div>
-              <div className={`h-1 flex-1 mx-2 ${step >= 5 ? "bg-blue-600" : "bg-gray-200"}`}></div>
-              <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  step >= 5 ? "bg-blue-600 text-white" : "bg-gray-200"
-                }`}
-              >
-                5
-              </div>
+              {[1, 2, 3, 4, 5].map((s, i) => (
+                <React.Fragment key={s}>
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${step >= s ? "bg-[#bf953f] text-black" : "bg-gray-800 text-gray-500 border border-white/10"
+                      }`}
+                  >
+                    {s}
+                  </div>
+                  {s < 5 && (
+                    <div className={`h-1 flex-1 mx-2 ${step >= s + 1 ? "bg-[#bf953f]" : "bg-gray-800"}`}></div>
+                  )}
+                </React.Fragment>
+              ))}
             </div>
-            <div className="flex justify-between mt-1 text-sm text-gray-600">
-              <span>Vehicle</span>
-              <span>Issue</span>
-              <span>Location</span>
-              <span>Providers</span>
-              <span>Date & Time</span>
+            <div className="flex justify-between mt-2 text-sm text-gray-400">
+              <span className={step >= 1 ? "text-[#bf953f]" : ""}>Vehicle</span>
+              <span className={step >= 2 ? "text-[#bf953f]" : ""}>Issue</span>
+              <span className={step >= 3 ? "text-[#bf953f]" : ""}>Location</span>
+              <span className={step >= 4 ? "text-[#bf953f]" : ""}>Providers</span>
+              <span className={step >= 5 ? "text-[#bf953f]" : ""}>Date & Time</span>
             </div>
           </div>
 
           {step === 1 && (
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold">Vehicle Details</h2>
+              <h2 className="text-xl font-semibold text-white">Vehicle Details</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Make</label>
-                  <input
-                    type="text"
-                    name="make"
-                    value={vehicleDetails.make}
-                    onChange={handleVehicleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="e.g., Toyota"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Model</label>
-                  <input
-                    type="text"
-                    name="model"
-                    value={vehicleDetails.model}
-                    onChange={handleVehicleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="e.g., Camry"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Variant</label>
-                  <input
-                    type="text"
-                    name="variant"
-                    value={vehicleDetails.variant}
-                    onChange={handleVehicleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="e.g., Hybrid"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Year</label>
-                  <input
-                    type="text"
-                    name="year"
-                    value={vehicleDetails.year}
-                    onChange={handleVehicleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="e.g., 2020"
-                  />
-                </div>
+                {['Make', 'Model', 'Variant', 'Year'].map((field) => (
+                  <div key={field}>
+                    <label className="block text-sm font-medium text-gray-300 mb-1">{field}</label>
+                    <input
+                      type="text"
+                      name={field.toLowerCase()}
+                      value={vehicleDetails[field.toLowerCase() as keyof typeof vehicleDetails]}
+                      onChange={handleVehicleChange}
+                      className="w-full px-4 py-2 bg-black border border-white/10 rounded-lg text-white focus:ring-[#bf953f] focus:border-[#bf953f] placeholder-gray-600"
+                      placeholder={`e.g., ${field === 'Year' ? '2020' : field === 'Make' ? 'Toyota' : field === 'Model' ? 'Camry' : 'Hybrid'}`}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           )}
 
           {step === 2 && (
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold">Repair Issue</h2>
+              <h2 className="text-xl font-semibold text-white">Repair Issue</h2>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Describe the Issue</label>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Describe the Issue</label>
                 <textarea
                   value={repairIssue}
                   onChange={(e) => setRepairIssue(e.target.value)}
                   rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 bg-black border border-white/10 rounded-lg text-white focus:ring-[#bf953f] focus:border-[#bf953f] placeholder-gray-600"
                   placeholder="Describe the issue with your car in detail..."
                 ></textarea>
               </div>
               <div className="pt-2">
-                <h3 className="font-medium text-gray-900 mb-2">Common Issues</h3>
+                <h3 className="font-medium text-white mb-2">Common Issues</h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  <button
-                    type="button"
-                    className="p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50"
-                    onClick={() => setRepairIssue("Brake problems")}
-                  >
-                    Brake problems
-                  </button>
-                  <button
-                    type="button"
-                    className="p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50"
-                    onClick={() => setRepairIssue("Engine issues")}
-                  >
-                    Engine issues
-                  </button>
-                  <button
-                    type="button"
-                    className="p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50"
-                    onClick={() => setRepairIssue("Electrical faults")}
-                  >
-                    Electrical faults
-                  </button>
-                  <button
-                    type="button"
-                    className="p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50"
-                    onClick={() => setRepairIssue("Suspension problems")}
-                  >
-                    Suspension problems
-                  </button>
-                  <button
-                    type="button"
-                    className="p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50"
-                    onClick={() => setRepairIssue("Cooling system")}
-                  >
-                    Cooling system
-                  </button>
-                  <button
-                    type="button"
-                    className="p-3 border border-gray-200 rounded-lg text-left hover:bg-gray-50"
-                    onClick={() => setRepairIssue("Transmission issues")}
-                  >
-                    Transmission issues
-                  </button>
+                  {[
+                    "Brake problems", "Engine issues", "Electrical faults",
+                    "Suspension problems", "Cooling system", "Transmission issues"
+                  ].map((issue) => (
+                    <button
+                      key={issue}
+                      type="button"
+                      className="p-3 border border-white/10 bg-black/50 rounded-lg text-left text-gray-300 hover:bg-white/5 hover:border-[#bf953f]/50 transition-colors"
+                      onClick={() => setRepairIssue(issue)}
+                    >
+                      {issue}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -248,14 +162,14 @@ const BookRepairPage = () => {
 
           {step === 3 && (
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold">Service Location</h2>
+              <h2 className="text-xl font-semibold text-white">Service Location</h2>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Postcode or Suburb</label>
+                <label className="block text-sm font-medium text-gray-300 mb-1">Postcode or Suburb</label>
                 <input
                   type="text"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 bg-black border border-white/10 rounded-lg text-white focus:ring-[#bf953f] focus:border-[#bf953f] placeholder-gray-600"
                   placeholder="Enter your postcode or suburb"
                 />
               </div>
@@ -264,30 +178,29 @@ const BookRepairPage = () => {
 
           {step === 4 && (
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold">Choose a Provider</h2>
-              <p className="text-gray-600">Select from available providers near {location || "your location"}</p>
+              <h2 className="text-xl font-semibold text-white">Choose a Provider</h2>
+              <p className="text-gray-400">Select from available providers near {location || "your location"}</p>
 
               <div className="space-y-4">
                 {providers.map((provider) => (
                   <div
                     key={provider.id}
-                    className={`p-4 border rounded-lg cursor-pointer transition-all ${
-                      selectedProvider === provider.id
-                        ? "border-blue-500 bg-blue-50"
-                        : "border-gray-200 hover:border-blue-300"
-                    }`}
+                    className={`p-4 border rounded-lg cursor-pointer transition-all ${selectedProvider === provider.id
+                      ? "border-[#bf953f] bg-[#bf953f]/10"
+                      : "border-white/10 bg-black hover:border-white/30"
+                      }`}
                     onClick={() => setSelectedProvider(provider.id)}
                   >
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="font-semibold text-lg">{provider.name}</h3>
+                        <h3 className="font-semibold text-lg text-white">{provider.name}</h3>
                         <div className="flex items-center mt-1">
-                          <div className="flex text-yellow-400">
+                          <div className="flex text-[#bf953f]">
                             {[...Array(5)].map((_, i) => (
                               <svg
                                 key={i}
                                 xmlns="http://www.w3.org/2000/svg"
-                                className={`h-4 w-4 ${i < Math.floor(provider.rating) ? 'text-yellow-400' : 'text-gray-300'}`}
+                                className={`h-4 w-4 ${i < Math.floor(provider.rating) ? 'text-[#bf953f]' : 'text-gray-600'}`}
                                 viewBox="0 0 20 20"
                                 fill="currentColor"
                               >
@@ -295,15 +208,15 @@ const BookRepairPage = () => {
                               </svg>
                             ))}
                           </div>
-                          <span className="ml-1 text-sm text-gray-600">
+                          <span className="ml-1 text-sm text-gray-400">
                             {provider.rating} ({provider.reviews} reviews)
                           </span>
                         </div>
-                        <p className="text-sm text-gray-600 mt-1">{provider.distance} away</p>
+                        <p className="text-sm text-gray-500 mt-1">{provider.distance} away</p>
                       </div>
                       <div className="text-right">
-                        <div className="font-semibold text-lg">${provider.price}</div>
-                        <div className={`text-sm ${provider.isAvailable ? 'text-green-600' : 'text-red-600'}`}>
+                        <div className="font-semibold text-lg text-white">${provider.price}</div>
+                        <div className={`text-sm ${provider.isAvailable ? 'text-green-500' : 'text-red-500'}`}>
                           {provider.isAvailable ? 'Available' : 'Not available'}
                         </div>
                       </div>
@@ -313,7 +226,7 @@ const BookRepairPage = () => {
                       {provider.services.map((service, idx) => (
                         <span
                           key={idx}
-                          className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded"
+                          className="px-2 py-1 bg-white/10 text-gray-300 text-xs rounded border border-white/5"
                         >
                           {service}
                         </span>
@@ -327,45 +240,45 @@ const BookRepairPage = () => {
 
           {step === 5 && (
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold">Date & Time</h2>
+              <h2 className="text-xl font-semibold text-white">Date & Time</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Select Date</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Select Date</label>
                   <input
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-4 py-2 bg-black border border-white/10 rounded-lg text-white focus:ring-[#bf953f] focus:border-[#bf953f]"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Preferred Time</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Preferred Time</label>
                   <select
                     value={time}
                     onChange={(e) => setTime(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-4 py-2 bg-black border border-white/10 rounded-lg text-white focus:ring-[#bf953f] focus:border-[#bf953f]"
                   >
                     <option value="">Select a time</option>
                     {selectedProvider
                       ? providers.find(p => p.id === selectedProvider)?.timeSlots.map((slot, idx) => (
-                          <option key={idx} value={slot}>{slot}</option>
-                        ))
+                        <option key={idx} value={slot}>{slot}</option>
+                      ))
                       : <option value="">Select a provider first</option>
                     }
                   </select>
                 </div>
               </div>
 
-              <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-                <h3 className="font-medium text-gray-900 mb-2">Booking Summary</h3>
-                <div className="space-y-1 text-sm">
+              <div className="mt-4 p-4 bg-[#bf953f]/10 border border-[#bf953f]/20 rounded-lg">
+                <h3 className="font-medium text-white mb-2">Booking Summary</h3>
+                <div className="space-y-1 text-sm text-gray-300">
                   <div className="flex justify-between">
                     <span>Repair:</span>
-                    <span className="font-medium">{repairIssue || "Not specified"}</span>
+                    <span className="font-medium text-white">{repairIssue || "Not specified"}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Provider:</span>
-                    <span className="font-medium">
+                    <span className="font-medium text-white">
                       {selectedProvider
                         ? providers.find(p => p.id === selectedProvider)?.name
                         : "Not selected"}
@@ -373,7 +286,7 @@ const BookRepairPage = () => {
                   </div>
                   <div className="flex justify-between">
                     <span>Price:</span>
-                    <span className="font-medium">
+                    <span className="font-medium text-white">
                       {selectedProvider
                         ? `$${providers.find(p => p.id === selectedProvider)?.price}`
                         : "TBD"}
@@ -381,7 +294,7 @@ const BookRepairPage = () => {
                   </div>
                   <div className="flex justify-between">
                     <span>Location:</span>
-                    <span className="font-medium">{location || "Not entered"}</span>
+                    <span className="font-medium text-white">{location || "Not entered"}</span>
                   </div>
                 </div>
               </div>
@@ -392,22 +305,20 @@ const BookRepairPage = () => {
             <button
               onClick={handleBack}
               disabled={step === 1}
-              className={`px-6 py-2 rounded-lg ${
-                step === 1
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              }`}
+              className={`px-6 py-2 rounded-lg transition-colors ${step === 1
+                ? "bg-white/5 text-gray-500 cursor-not-allowed"
+                : "bg-white/10 text-white hover:bg-white/20"
+                }`}
             >
               Back
             </button>
             <button
               onClick={handleNext}
               disabled={step === 4 && selectedProvider === null}
-              className={`px-6 py-2 rounded-lg ${
-                step === 4 && selectedProvider === null
-                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : "bg-blue-600 text-white hover:bg-blue-700"
-              }`}
+              className={`px-6 py-2 rounded-lg font-semibold transition-colors ${step === 4 && selectedProvider === null
+                ? "bg-white/5 text-gray-500 cursor-not-allowed"
+                : "bg-gold-gradient text-white hover:opacity-90 shadow-lg"
+                }`}
             >
               {step < 5 ? "Continue" : "Confirm Booking"}
             </button>

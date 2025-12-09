@@ -7,9 +7,9 @@ export default function CarServicingLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen ">
             <SearchHero
-                title="Compare car service costs"
+                title={<span>COMPARE <span className="text-[#bf953f]">CAR SERVICE</span> COST</span>}
                 subtitle="Instantly book Australia's best mechanics."
                 backgroundImage="/car-service/car-service-banner-bg.jpg"
             />

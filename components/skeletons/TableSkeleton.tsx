@@ -22,22 +22,22 @@ export function TableSkeleton({
                 </div>
             </div>
 
-            <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm space-y-4">
-                {showSearch && <Skeleton className="h-10 w-full max-w-sm" />}
+            <div className="bg-[#111] p-6 rounded-lg border border-white/10 shadow-sm space-y-4">
+                {showSearch && <Skeleton className="h-10 w-full max-w-sm bg-gray-800" />}
 
                 <div className=" rounded-md">
                     {/* Header */}
-                    <div className="flex items-center p-4 bg-gray-50 gap-4">
+                    <div className="flex items-center p-4 bg-black/50 gap-4">
                         {Array.from({ length: columnCount }).map((_, i) => (
-                            <Skeleton key={`header-${i}`} className="h-4 w-full" />
+                            <Skeleton key={`header-${i}`} className="h-4 w-full bg-gray-800" />
                         ))}
                     </div>
 
                     {/* Rows */}
                     {Array.from({ length: rowCount }).map((_, rowIndex) => (
-                        <div key={`row-${rowIndex}`} className="flex items-center p-4 gap-4">
+                        <div key={`row-${rowIndex}`} className="flex items-center p-4 gap-4 border-b border-white/5 last:border-0">
                             {Array.from({ length: columnCount }).map((_, colIndex) => (
-                                <Skeleton key={`cell-${rowIndex}-${colIndex}`} className="h-4 w-full" />
+                                <Skeleton key={`cell-${rowIndex}-${colIndex}`} className="h-4 w-full bg-gray-800" />
                             ))}
                         </div>
                     ))}

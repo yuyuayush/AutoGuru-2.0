@@ -51,27 +51,27 @@ export default function BookingsPage() {
             header: "Customer",
             cell: ({ row }) => (
                 <div>
-                    <div className="font-medium text-gray-900">{row.getValue("name")}</div>
-                    <div className="text-xs text-gray-500">{row.original.email}</div>
+                    <div className="font-medium text-[var(--table-text-cell)]">{row.getValue("name")}</div>
+                    <div className="text-xs text-gray-400">{row.original.email}</div>
                 </div>
             ),
         },
         {
             accessorKey: "serviceType",
             header: "Service",
-            cell: ({ row }) => <div className="text-gray-600">{row.getValue("serviceType")}</div>,
+            cell: ({ row }) => <div className="text-gray-400">{row.getValue("serviceType")}</div>,
         },
         {
             accessorKey: "vehicleName",
             header: "Vehicle",
-            cell: ({ row }) => <div className="text-gray-600">{row.getValue("vehicleName")} {row.original.vehicleModel}</div>,
+            cell: ({ row }) => <div className="text-gray-400">{row.getValue("vehicleName")} {row.original.vehicleModel}</div>,
         },
         {
             accessorKey: "createdAt",
             header: "Date",
             cell: ({ row }) => {
                 const date = row.getValue("createdAt") as string;
-                return <div className="text-gray-600">{date ? format(new Date(date), 'MMM d, yyyy') : 'N/A'}</div>;
+                return <div className="text-gray-400">{date ? format(new Date(date), 'MMM d, yyyy') : 'N/A'}</div>;
             },
         },
         {
@@ -130,8 +130,8 @@ export default function BookingsPage() {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-2xl font-bold text-gray-900">Bookings</h1>
-                <p className="text-gray-500 mt-1">Manage all service bookings</p>
+                <h1 className="text-2xl font-bold text-white">Bookings</h1>
+                <p className="text-gray-400 mt-1">Manage all service bookings</p>
             </div>
 
             <DataTable columns={columns} data={data} searchKey="name" searchPlaceholder="Search bookings..." />

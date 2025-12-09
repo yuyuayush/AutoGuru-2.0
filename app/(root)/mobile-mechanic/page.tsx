@@ -16,7 +16,7 @@ import {
 
 const MobileMechanicPage = () => {
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen">
             {/* Intro Section */}
             <IntroSection
                 image="/car-guy.png"

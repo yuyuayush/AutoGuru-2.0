@@ -1,30 +1,59 @@
 "use client";
 
-import { MOCK_INQUIRIES } from "@/constants/dummyData";
 import { DataTable } from "@/components/ui/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
 import { Loader2, Eye, Trash } from "lucide-react";
-import { format } from "date-fns";
 import { useState } from "react";
-import { Modal } from "@/components/ui/Modal";
-import { DeleteModal } from "@/components/ui/DeleteModal";
 import { toast } from "sonner";
+import { format } from "date-fns";
+import { useInquiries, useUpdateContactStatus } from "@/hooks/useContact";
+import { useQueryClient } from "@tanstack/react-query";
+import { InquiryViewModal } from "@/components/admin/inquiries/InquiryViewModal";
+import { InquiryDeleteModal } from "@/components/admin/inquiries/InquiryDeleteModal";
 
-// Define the shape of our data
+// Type matching API response
 type Inquiry = {
     _id: string;
     name: string;
     email: string;
-    subject: string;
+    phone: string;
+    make: string;
+    service: string;
     message: string;
-    createdAt: string;
     status: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+};
+
+const getInitials = (name: string = "") => {
+    return name
+        .split(" ")
+        .map((n) => n[0])
+        .slice(0, 2)
+        .join("")
+        .toUpperCase();
+};
+
+const getRandomColor = (name: string) => {
+    const colors = [
+        "bg-red-500", "bg-orange-500", "bg-amber-500", "bg-yellow-500", "bg-lime-500",
+        "bg-green-500", "bg-emerald-500", "bg-teal-500", "bg-cyan-500", "bg-sky-500",
+        "bg-blue-500", "bg-indigo-500", "bg-violet-500", "bg-purple-500", "bg-fuchsia-500",
+        "bg-pink-500", "bg-rose-500"
+    ];
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+        hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return colors[Math.abs(hash) % colors.length];
 };
 
 export default function InquiriesPage() {
-    // const { data: inquiries, isLoading } = useInquiries();
-    const inquiries = MOCK_INQUIRIES;
-    const isLoading = false;
+    const queryClient = useQueryClient();
+    const { data: contactsData, isLoading } = useInquiries();
+    const { mutate: updateStatus } = useUpdateContactStatus();
+
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
@@ -32,6 +61,15 @@ export default function InquiriesPage() {
     const handleView = (inquiry: Inquiry) => {
         setSelectedInquiry(inquiry);
         setIsViewModalOpen(true);
+
+        // Mark as read if currently 'New'
+        if (inquiry.status === 'New') {
+            updateStatus({ id: inquiry._id, status: 'Read' }, {
+                onSuccess: () => {
+                    queryClient.invalidateQueries({ queryKey: ["inquiries"] });
+                }
+            });
+        }
     };
 
     const handleDelete = (inquiry: Inquiry) => {
@@ -40,7 +78,7 @@ export default function InquiriesPage() {
     };
 
     const confirmDelete = () => {
-        toast.success("Inquiry deleted");
+        toast.info("Delete functionality would go here");
         setIsDeleteModalOpen(false);
         setSelectedInquiry(null);
     };
@@ -49,24 +87,65 @@ export default function InquiriesPage() {
         {
             accessorKey: "name",
             header: "Name",
-            cell: ({ row }) => <div className="font-medium text-gray-900">{row.getValue("name")}</div>,
+            cell: ({ row }) => {
+                const inquiry = row.original;
+                const fullName = inquiry.name;
+                const initials = getInitials(fullName);
+                const bgColor = getRandomColor(fullName);
+                const isUnread = inquiry.status === 'New';
+
+                return (
+                    <div className="flex items-center gap-3">
+                        <div className={`relative w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold ${bgColor} shadow-sm`}>
+                            {initials}
+                            {isUnread && (
+                                <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 border-2 border-[#111] rounded-full"></span>
+                            )}
+                        </div>
+                        <div>
+                            <div className={`font-medium text-[var(--table-text-cell)] ${isUnread ? 'font-bold text-white' : ''}`}>
+                                {fullName}
+                            </div>
+                            <div className="text-xs text-gray-500">{inquiry.phone}</div>
+                        </div>
+                    </div>
+                );
+            },
         },
         {
             accessorKey: "email",
             header: "Email",
-            cell: ({ row }) => <div className="text-gray-600">{row.getValue("email")}</div>,
+            cell: ({ row }) => {
+                const isUnread = row.original.status === 'New';
+                return <div className={`text-gray-400 ${isUnread ? 'font-semibold text-gray-200' : ''}`}>{row.getValue("email")}</div>;
+            },
         },
         {
-            accessorKey: "subject",
-            header: "Subject",
-            cell: ({ row }) => <div className="text-gray-600">{row.getValue("subject")}</div>,
+            accessorKey: "make",
+            header: "Vehicle",
+            cell: ({ row }) => <div className="text-gray-400">{row.getValue("make") || 'N/A'}</div>,
+        },
+        {
+            accessorKey: "service",
+            header: "Service",
+            cell: ({ row }) => <div className="text-gray-400">{row.getValue("service") || 'General'}</div>,
+        },
+        {
+            accessorKey: "message",
+            header: "Message",
+            cell: ({ row }) => {
+                const msg = row.getValue("message") as string;
+                const isUnread = row.original.status === 'New';
+                return <div className={`truncate max-w-xs text-gray-400 ${isUnread ? 'font-semibold text-gray-200' : ''}`}>{msg}</div>;
+            },
         },
         {
             accessorKey: "createdAt",
             header: "Date",
             cell: ({ row }) => {
                 const date = row.getValue("createdAt") as string;
-                return <div className="text-gray-600">{date ? format(new Date(date), 'MMM d, yyyy') : 'N/A'}</div>;
+                const isUnread = row.original.status === 'New';
+                return <div className={`text-gray-400 ${isUnread ? 'font-semibold text-gray-200' : ''}`}>{date ? format(new Date(date), 'MMM d, yyyy') : 'N/A'}</div>;
             },
         },
         {
@@ -76,7 +155,7 @@ export default function InquiriesPage() {
                     <div className="flex items-center justify-end space-x-2">
                         <button
                             className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
-                            title="View"
+                            title="View Details"
                             onClick={() => handleView(row.original)}
                         >
                             <Eye className="w-4 h-4" />
@@ -95,56 +174,33 @@ export default function InquiriesPage() {
     ];
 
     if (isLoading) {
-        return (
-            <div className="flex justify-center items-center h-96">
-                <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-            </div>
-        );
+        return <div className="flex justify-center items-center h-96"><Loader2 className="w-8 h-8 animate-spin text-blue-600" /></div>;
     }
 
-    // Mock data if API returns empty
-    const data = (inquiries && inquiries.length > 0) ? inquiries : [
-        { _id: '1', name: 'Alice Johnson', email: 'alice@example.com', subject: 'Service Inquiry', message: 'How much for a full service?', createdAt: '2023-11-25T10:00:00Z', status: 'New' },
-        { _id: '2', name: 'Bob Williams', email: 'bob@example.com', subject: 'Booking Issue', message: 'I cannot book online.', createdAt: '2023-11-24T14:30:00Z', status: 'Read' },
-    ];
+    const inquiries = contactsData?.contacts || [];
 
     return (
         <div className="space-y-6">
-            <div>
-                <h1 className="text-2xl font-bold text-gray-900">Inquiries</h1>
-                <p className="text-gray-500 mt-1">Manage contact form submissions</p>
+            <div className="flex justify-between items-center">
+                <div>
+                    <h1 className="text-2xl font-bold text-white">Inquiries</h1>
+                    <p className="text-gray-400 mt-1">Manage contact form submissions</p>
+                </div>
             </div>
 
-            <DataTable columns={columns} data={data} searchKey="name" searchPlaceholder="Search inquiries..." />
+            <DataTable columns={columns} data={inquiries} searchKey="name" searchPlaceholder="Search inquiries..." />
 
-            {/* View Inquiry Modal */}
-            <Modal isOpen={isViewModalOpen} onClose={() => setIsViewModalOpen(false)} title="Inquiry Details">
-                <div className="space-y-4">
-                    <div>
-                        <h4 className="text-sm font-medium text-gray-500">From</h4>
-                        <p className="text-gray-900">{selectedInquiry?.name} ({selectedInquiry?.email})</p>
-                    </div>
-                    <div>
-                        <h4 className="text-sm font-medium text-gray-500">Subject</h4>
-                        <p className="text-gray-900">{selectedInquiry?.subject}</p>
-                    </div>
-                    <div>
-                        <h4 className="text-sm font-medium text-gray-500">Message</h4>
-                        <p className="text-gray-900 whitespace-pre-wrap bg-gray-50 p-3 rounded-md text-sm">{selectedInquiry?.message}</p>
-                    </div>
-                    <div className="pt-4 flex justify-end">
-                        <button onClick={() => setIsViewModalOpen(false)} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 text-sm font-medium">Close</button>
-                    </div>
-                </div>
-            </Modal>
+            <InquiryViewModal
+                isOpen={isViewModalOpen}
+                onClose={() => setIsViewModalOpen(false)}
+                inquiry={selectedInquiry}
+            />
 
-            {/* Delete Confirmation Modal */}
-            <DeleteModal
+            <InquiryDeleteModal
                 isOpen={isDeleteModalOpen}
                 onClose={() => setIsDeleteModalOpen(false)}
                 onConfirm={confirmDelete}
-                title="Delete Inquiry"
-                description="Are you sure you want to delete this inquiry? This action cannot be undone."
+                inquiryName={selectedInquiry?.name}
             />
         </div>
     );

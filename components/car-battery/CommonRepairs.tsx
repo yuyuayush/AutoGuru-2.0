@@ -15,11 +15,11 @@ interface CommonRepairsProps {
 
 const CommonRepairs: React.FC<CommonRepairsProps> = ({ title, repairs }) => {
     return (
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-black">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
                 <div className="flex items-center justify-center gap-3 mb-12">
-                    <h2 className="text-3xl font-serif text-gray-900">{title}</h2>
-                    <Wrench className="w-6 h-6 text-blue-600" />
+                    <h2 className="text-3xl font-serif text-white">{title}</h2>
+                    <Wrench className="w-6 h-6 text-[#bf953f]" />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -39,7 +39,7 @@ const CommonRepairs: React.FC<CommonRepairsProps> = ({ title, repairs }) => {
                                 <h3 className="text-2xl font-bold text-white mb-2">
                                     {repair.title}
                                 </h3>
-                                <div className="h-1 w-12 bg-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                                <div className="h-1 w-12 bg-[#bf953f] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                             </div>
                         </div>
                     ))}

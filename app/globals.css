@@ -110,7 +110,22 @@
   --color-background-soft: rgba(38, 38, 38, 0.2);
 
   --color-foreground-muted: #9ca3af;
+  --color-foreground-muted: #9ca3af;
   --color-foreground-dim: #d1d5db;
+
+  /* Table Theme Variables (Default Light) */
+  --table-bg: #ffffff;
+  --table-header-bg: #f9fafb; /* gray-50 */
+  --table-border: #e5e7eb; /* gray-200 */
+  --table-text-header: #6b7280; /* gray-500 */
+  --table-text-cell: #111827; /* gray-900 */
+  --table-row-hover: #f9fafb; /* gray-50 */
+  /* Modal Theme Variables */
+  --modal-bg: #ffffff;
+  --modal-border: #f3f4f6; /* gray-100 */
+  --modal-text-title: #111827; /* gray-900 */
+  --modal-close-icon: #9ca3af; /* gray-400 */
+  --modal-close-hover-bg: #f3f4f6; /* gray-100 */
 }
 
 body {

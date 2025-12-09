@@ -44,7 +44,7 @@ const ExploreInsights: React.FC<ExploreInsightsProps> = ({ articles }) => {
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                                     {articles.map((article) => (
                                         <Link href="#" key={article.id} className="group block h-full">
-                                            <div className="bg-white rounded-xl overflow-hidden shadow-lg h-full flex flex-col transition-transform duration-300 group-hover:-translate-y-1">
+                                            <div className="bg-[#111] rounded-xl overflow-hidden shadow-lg h-full flex flex-col transition-transform duration-300 group-hover:-translate-y-1 border border-white/10">
                                                 <div className="relative h-32 w-full">
                                                     <Image
                                                         src={article.image}
@@ -54,14 +54,14 @@ const ExploreInsights: React.FC<ExploreInsightsProps> = ({ articles }) => {
                                                     />
                                                 </div>
                                                 <div className="p-3 flex flex-col flex-grow">
-                                                    <h4 className="text-lg font-bold text-gray-900 mb-4 line-clamp-2">
+                                                    <h4 className="text-lg font-bold text-white mb-4 line-clamp-2">
                                                         {article.title}
                                                     </h4>
                                                     <div className="mt-auto flex items-center gap-2">
-                                                        <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs text-gray-600 font-bold">
+                                                        <div className="w-6 h-6 rounded-full bg-gray-800 flex items-center justify-center text-xs text-gray-300 font-bold">
                                                             {article.author.substring(0, 2).toUpperCase()}
                                                         </div>
-                                                        <span className="text-sm text-gray-600 font-medium">
+                                                        <span className="text-sm text-gray-400 font-medium">
                                                             By {article.author}
                                                         </span>
                                                     </div>

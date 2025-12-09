@@ -38,22 +38,22 @@ export default function QuotesPage() {
         {
             accessorKey: "customer",
             header: "Customer",
-            cell: ({ row }) => <div className="font-medium text-gray-900">{row.getValue("customer")}</div>,
+            cell: ({ row }) => <div className="font-medium text-[var(--table-text-cell)]">{row.getValue("customer")}</div>,
         },
         {
             accessorKey: "vehicle",
             header: "Vehicle",
-            cell: ({ row }) => <div className="text-gray-600">{row.getValue("vehicle")}</div>,
+            cell: ({ row }) => <div className="text-gray-400">{row.getValue("vehicle")}</div>,
         },
         {
             accessorKey: "service",
             header: "Service",
-            cell: ({ row }) => <div className="text-gray-600">{row.getValue("service")}</div>,
+            cell: ({ row }) => <div className="text-gray-400">{row.getValue("service")}</div>,
         },
         {
             accessorKey: "date",
             header: "Date",
-            cell: ({ row }) => <div className="text-gray-600">{row.getValue("date")}</div>,
+            cell: ({ row }) => <div className="text-gray-400">{row.getValue("date")}</div>,
         },
         {
             accessorKey: "status",
@@ -98,8 +98,8 @@ export default function QuotesPage() {
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-2xl font-bold text-gray-900">Quotes</h1>
-                <p className="text-gray-500 mt-1">Monitor quote requests and responses</p>
+                <h1 className="text-2xl font-bold text-white">Quotes</h1>
+                <p className="text-gray-400 mt-1">Monitor quote requests and responses</p>
             </div>
 
             <DataTable columns={columns} data={quotes} searchKey="customer" searchPlaceholder="Search quotes..." />
@@ -108,23 +108,23 @@ export default function QuotesPage() {
             <Modal isOpen={isViewModalOpen} onClose={() => setIsViewModalOpen(false)} title="Quote Details">
                 <div className="space-y-4">
                     <div>
-                        <h4 className="text-sm font-medium text-gray-500">Customer</h4>
-                        <p className="text-gray-900">{selectedQuote?.customer}</p>
+                        <h4 className="text-sm font-medium text-gray-400">Customer</h4>
+                        <p className="text-gray-200">{selectedQuote?.customer}</p>
                     </div>
                     <div>
-                        <h4 className="text-sm font-medium text-gray-500">Vehicle</h4>
-                        <p className="text-gray-900">{selectedQuote?.vehicle}</p>
+                        <h4 className="text-sm font-medium text-gray-400">Vehicle</h4>
+                        <p className="text-gray-200">{selectedQuote?.vehicle}</p>
                     </div>
                     <div>
-                        <h4 className="text-sm font-medium text-gray-500">Service</h4>
-                        <p className="text-gray-900">{selectedQuote?.service}</p>
+                        <h4 className="text-sm font-medium text-gray-400">Service</h4>
+                        <p className="text-gray-200">{selectedQuote?.service}</p>
                     </div>
                     <div>
-                        <h4 className="text-sm font-medium text-gray-500">Status</h4>
-                        <p className="text-gray-900">{selectedQuote?.status}</p>
+                        <h4 className="text-sm font-medium text-gray-400">Status</h4>
+                        <p className="text-gray-200">{selectedQuote?.status}</p>
                     </div>
                     <div className="pt-4 flex justify-end">
-                        <button onClick={() => setIsViewModalOpen(false)} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 text-sm font-medium">Close</button>
+                        <button onClick={() => setIsViewModalOpen(false)} className="px-4 py-2 bg-gray-800 text-gray-300 rounded-md hover:bg-gray-700 text-sm font-medium">Close</button>
                     </div>
                 </div>
             </Modal>
@@ -133,11 +133,11 @@ export default function QuotesPage() {
             <Modal isOpen={isRespondModalOpen} onClose={() => setIsRespondModalOpen(false)} title="Respond to Quote">
                 <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); toast.success("Response sent"); setIsRespondModalOpen(false); }}>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                        <textarea rows={4} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500" placeholder="Enter your response..." />
+                        <label className="block text-sm font-medium text-gray-400 mb-1">Message</label>
+                        <textarea rows={4} className="w-full px-3 py-2 bg-gray-900 border border-gray-700 text-white rounded-md focus:outline-none focus:ring-1 focus:ring-red-500" placeholder="Enter your response..." />
                     </div>
                     <div className="pt-4 flex justify-end gap-3">
-                        <button type="button" onClick={() => setIsRespondModalOpen(false)} className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-sm font-medium">Cancel</button>
+                        <button type="button" onClick={() => setIsRespondModalOpen(false)} className="px-4 py-2 text-gray-400 hover:bg-gray-800 rounded-md text-sm font-medium">Cancel</button>
                         <button type="submit" className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 text-sm font-medium">Send Response</button>
                     </div>
                 </form>

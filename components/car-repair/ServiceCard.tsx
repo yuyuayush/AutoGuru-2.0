@@ -17,7 +17,7 @@ export default function ServiceCard({ service }: { service: ServiceItem }) {
                 <Link
                     href={`/car-repair-service/${encodeURIComponent(item.toLowerCase().replace(/ /g, '-'))}`}
                     key={idx}
-                    className="text-sm text-gray-600 hover:text-blue-600 transition-colors cursor-pointer block py-1"
+                    className="text-sm text-gray-400 hover:text-[#bf953f] transition-colors cursor-pointer block py-1"
                 >
                     {item}
                 </Link>
@@ -28,12 +28,12 @@ export default function ServiceCard({ service }: { service: ServiceItem }) {
     // Horizontal Layout (e.g., Air Conditioning)
     if (layout === 'horizontal') {
         return (
-            <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden p-8 flex flex-col md:flex-row items-center gap-8 col-span-full">
+            <div className="bg-[#111] rounded-2xl border border-white/5 overflow-hidden p-8 flex flex-col md:flex-row items-center gap-8 col-span-full">
                 <div className="flex-1 w-full">
-                    <h2 className="text-2xl font-serif text-gray-900 mb-6">{category}</h2>
+                    <h2 className="text-xl font-bold uppercase tracking-widest text-white mb-6 pl-1">{category}</h2>
                     {renderItems(1)}
                 </div>
-                <div className="w-full md:w-1/2 h-64 relative rounded-2xl overflow-hidden">
+                <div className="w-full md:w-1/2 h-64 relative rounded-xl overflow-hidden">
                     {image && (
                         <Image
                             src={image}
@@ -50,8 +50,8 @@ export default function ServiceCard({ service }: { service: ServiceItem }) {
     // Full Width Layout (e.g., Brakes)
     if (layout === 'full-width') {
         return (
-            <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden p-8 col-span-full">
-                <div className="w-full h-48 relative rounded-2xl overflow-hidden mb-8">
+            <div className="bg-[#111] rounded-2xl border border-white/5 overflow-hidden p-8 col-span-full">
+                <div className="w-full h-48 relative rounded-xl overflow-hidden mb-8">
                     {image && (
                         <Image
                             src={image}
@@ -61,7 +61,7 @@ export default function ServiceCard({ service }: { service: ServiceItem }) {
                         />
                     )}
                 </div>
-                <h2 className="text-2xl font-serif text-center text-gray-900 mb-8">{category}</h2>
+                <h2 className="text-xl font-bold uppercase tracking-widest text-center text-white mb-8">{category}</h2>
                 {renderItems(4)}
             </div>
         );
@@ -69,8 +69,8 @@ export default function ServiceCard({ service }: { service: ServiceItem }) {
 
     // Vertical Layout (Default)
     return (
-        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden p-8 flex flex-col h-full">
-            <div className="w-full h-48 relative rounded-2xl overflow-hidden mb-8">
+        <div className="bg-[#111] rounded-2xl border border-white/5 overflow-hidden p-8 flex flex-col h-full">
+            <div className="w-full h-48 relative rounded-xl overflow-hidden mb-8">
                 {image && (
                     <Image
                         src={image}
@@ -80,13 +80,13 @@ export default function ServiceCard({ service }: { service: ServiceItem }) {
                     />
                 )}
             </div>
-            <h2 className="text-2xl font-serif text-center text-gray-900 mb-8">{category}</h2>
+            <h2 className="text-xl font-bold uppercase tracking-widest text-center text-white mb-8">{category}</h2>
             <div className="text-center">
                 {items.map((item, idx) => (
                     <Link
                         href={`/car-repair-service/${encodeURIComponent(item.toLowerCase().replace(/ /g, '-'))}`}
                         key={idx}
-                        className="text-sm text-gray-600 hover:text-blue-600 transition-colors cursor-pointer block py-1"
+                        className="text-sm text-gray-400 hover:text-[#bf953f] transition-colors cursor-pointer block py-1"
                     >
                         {item}
                     </Link>

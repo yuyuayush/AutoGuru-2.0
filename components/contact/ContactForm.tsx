@@ -11,6 +11,8 @@ const ContactForm = () => {
     name: "",
     phone: "",
     email: "",
+    make: "",
+    service: "",
     message: "",
   });
 
@@ -24,7 +26,7 @@ const ContactForm = () => {
   };
 
   // Handle Submit
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     const payload = {
@@ -32,8 +34,8 @@ const ContactForm = () => {
       email: formData.email,
       phone: formData.phone,
       message: formData.message,
-      service: formData.bookingRef || "General Inquiry", // Booking ref as 'service' field
-      make: "Website Form",
+      service: formData.service || "General Inquiry",
+      make: formData.make || "General",
     };
 
     mutate(payload, {
@@ -43,6 +45,8 @@ const ContactForm = () => {
           name: "",
           phone: "",
           email: "",
+          make: "",
+          service: "",
           message: "",
         });
       },
@@ -50,7 +54,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+    <div className="bg-[#1a1a1a] p-8 rounded-xl shadow-lg border border-white/10">
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="relative">
           <input
@@ -58,31 +62,33 @@ const ContactForm = () => {
             name="bookingRef"
             value={formData.bookingRef}
             onChange={handleChange}
-            placeholder="Booking Reference"
-            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 transition-colors"
+            placeholder="Booking Reference (Optional)"
+            className="w-full px-4 py-3 bg-[#111] border border-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#bf953f]/50 focus:border-[#bf953f] transition-colors placeholder:text-gray-500"
           />
-          <Info className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 cursor-help" />
+          <Info className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 cursor-help" />
         </div>
 
-        <input
-          type="text"
-          name="name"
-          required
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="Name"
-          className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 transition-colors"
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            type="text"
+            name="name"
+            required
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Name"
+            className="w-full px-4 py-3 bg-[#111] border border-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#bf953f]/50 focus:border-[#bf953f] transition-colors placeholder:text-gray-500"
+          />
 
-        <input
-          type="tel"
-          name="phone"
-          required
-          value={formData.phone}
-          onChange={handleChange}
-          placeholder="Phone Number"
-          className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 transition-colors"
-        />
+          <input
+            type="tel"
+            name="phone"
+            required
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="Phone Number"
+            className="w-full px-4 py-3 bg-[#111] border border-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#bf953f]/50 focus:border-[#bf953f] transition-colors placeholder:text-gray-500"
+          />
+        </div>
 
         <input
           type="email"
@@ -91,8 +97,28 @@ const ContactForm = () => {
           value={formData.email}
           onChange={handleChange}
           placeholder="Email"
-          className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 transition-colors"
+          className="w-full px-4 py-3 bg-[#111] border border-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#bf953f]/50 focus:border-[#bf953f] transition-colors placeholder:text-gray-500"
         />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            type="text"
+            name="make"
+            value={formData.make}
+            onChange={handleChange}
+            placeholder="Vehicle Brand (e.g. Toyota)"
+            className="w-full px-4 py-3 bg-[#111] border border-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#bf953f]/50 focus:border-[#bf953f] transition-colors placeholder:text-gray-500"
+          />
+
+          <input
+            type="text"
+            name="service"
+            value={formData.service}
+            onChange={handleChange}
+            placeholder="Service Required (e.g. Oil Change)"
+            className="w-full px-4 py-3 bg-[#111] border border-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#bf953f]/50 focus:border-[#bf953f] transition-colors placeholder:text-gray-500"
+          />
+        </div>
 
         <textarea
           name="message"
@@ -100,13 +126,13 @@ const ContactForm = () => {
           onChange={handleChange}
           placeholder="Comments"
           rows={4}
-          className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-gray-400 transition-colors resize-none"
+          className="w-full px-4 py-3 bg-[#111] border border-white/10 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#bf953f]/50 focus:border-[#bf953f] transition-colors resize-none placeholder:text-gray-500"
         />
 
         <button
           type="submit"
           disabled={isPending}
-          className="w-full bg-black text-white font-medium py-3 rounded-lg hover:bg-gray-900 transition-colors disabled:opacity-70"
+          className="w-full bg-white text-black font-medium py-3 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-70"
         >
           {isPending ? "Sending..." : "Submit"}
         </button>
